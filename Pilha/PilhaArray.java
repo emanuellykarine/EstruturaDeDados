@@ -6,7 +6,7 @@ public class PilhaArray implements Pilha{ //Classe pilha array receber os métod
 
     public PilhaArray(int capacidade, int crescimento) {
         this.capacidade = capacidade; //Capacidade do array recebe capacidade informada
-        t =-1; //Indice
+        t = -1; //Indice
         FC = crescimento; //Fator de crescimento pra ver se vai ser incremento ou duplicação
         if (crescimento <= 0){ //Se o cresimento for menor ou igual a zero, vai ser utilizado duplicação
             FC = 0;
@@ -54,8 +54,8 @@ public class PilhaArray implements Pilha{ //Classe pilha array receber os métod
         return t+1;
     }
 
-    public void empty(){
-        Object arrayVazio[] = new Object[capacidade]; 
-        array = arrayVazio;
-    }
+    // public void empty(){
+    //     Object arrayVazio[] = new Object[capacidade]; 
+    //     array = arrayVazio;
+    // }
 }
