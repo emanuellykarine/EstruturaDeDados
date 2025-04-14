@@ -50,7 +50,7 @@ public class PilhaArray implements Pilha{ //Classe pilha array receber os métod
         return t == -1; //Retorna se t é igual a -1
     }
 
-    public int size(){
+    public int size(){ //Tamanho do array, quantos elementos já tem
         return t+1;
     }
 
