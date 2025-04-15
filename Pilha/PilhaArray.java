@@ -54,8 +54,12 @@ public class PilhaArray implements Pilha{ //Classe pilha array receber os métod
         return t+1;
     }
 
-    // public void empty(){
-    //     Object arrayVazio[] = new Object[capacidade]; 
-    //     array = arrayVazio;
-    // }
+    public void empty(){
+        // Object arrayVazio[] = new Object[capacidade]; 
+        // array = arrayVazio;
+        for (int i = 0; i < capacidade; i++){
+            array[i] = null;
+        }
+        t = -1;
+    }
 }

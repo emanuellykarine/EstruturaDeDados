@@ -34,4 +34,8 @@ public class PilhaVector implements Pilha {
     public int size(){
         return vetor.size();
     }
+
+    public void empty(){
+
+    }
 }
