@@ -12,6 +12,19 @@ public class PilhaVP implements PilhaColorida{
     }
 
     public void pushVermelha(Object o){
+        if (topoVermelha + topoPreta >= n/3) { //Se o array estiver com 1/3 de utilização, reduz o tamanho pela metade
+            n = n/2;
+            Object novoArray[] = new Object[n];
+            for (int i = 0; i < topoVermelha; i++){
+                novoArray[i] = pilhaVP[i];
+            }
+
+            for (int i = n - 1; i > topoPreta; i--){
+                novoArray[i] = pilhaVP[i/2];
+            }
+            pilhaVP = novoArray;
+        }
+
         if (topoVermelha >= topoPreta) {
             n = n * 2;
             Object novoArray[] = new Object[n];
@@ -55,6 +68,19 @@ public class PilhaVP implements PilhaColorida{
     }
 
     public void pushPreta(Object o){
+        if (topoVermelha + topoPreta >= n/3) { //Se o array estiver com 1/3 de utilização, reduz o tamanho pela metade
+            n = n/2;
+            Object novoArray[] = new Object[n];
+            for (int i = 0; i < topoVermelha; i++){
+                novoArray[i] = pilhaVP[i];
+            }
+
+            for (int i = n - 1; i > topoPreta; i--){
+                novoArray[i] = pilhaVP[i/2];
+            }
+            pilhaVP = novoArray;
+        }
+        
         if (topoPreta <= topoVermelha) {
             n = n * 2;
             Object novoArray[] = new Object[n];

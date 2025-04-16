@@ -28,5 +28,16 @@ public class testePilha5 { //Questão 5
 
         System.out.println("Pilha vermelha está vazia: " + coloridaPilha.isEmptyVermelha());
         System.out.println("Pilha preta está vazia: " + coloridaPilha.isEmptyPreta());
+
+        System.out.println(("Removido pilha vermelha:") + coloridaPilha.popVermelha());
+        System.out.println(("Removido pilha vermelha:") + coloridaPilha.popVermelha());
+        System.out.println(("Removido pilha preta:") + coloridaPilha.popPreta());
+
+        System.out.println("Tamanho pilha vermelha:" + coloridaPilha.sizeVermelha());
+        System.out.println("Tamanho pilha preta:" + coloridaPilha.sizePreta());
+
+        System.out.println("Topo pilha vermelha:" + coloridaPilha.topVermelha());
+        System.out.println("Topo pilha preta:" + coloridaPilha.topPreta());
+
     }
 }
