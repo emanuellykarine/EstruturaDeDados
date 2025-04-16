@@ -63,10 +63,6 @@ public class PilhaVP implements PilhaColorida{
         return topoVermelha == -1;
     }
 
-    public void emptyVermelha(){
-
-    }
-
     public void pushPreta(Object o){
         if (topoVermelha + topoPreta >= n/3) { //Se o array estiver com 1/3 de utilização, reduz o tamanho pela metade
             n = n/2;
@@ -117,10 +113,6 @@ public class PilhaVP implements PilhaColorida{
 
     public boolean isEmptyPreta(){
         return topoPreta == n - 1;
-    }
-
-    public void emptyPreta(){
-
     }
 
 }
