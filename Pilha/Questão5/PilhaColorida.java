@@ -1,3 +1,6 @@
+package Questão5;
+import Questão2.PilhaVaziaExcecao;
+
 public interface PilhaColorida {
     public int sizeVermelha(); //Tamanho da pilha    
     public boolean isEmptyVermelha(); //Se a pilha está vazia

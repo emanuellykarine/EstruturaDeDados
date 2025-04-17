@@ -1,3 +1,4 @@
+package Questão2;
 // Conjunto de métodos abstratos que definem o comportamento de uma classe
 // O TAD Pilha possui esses métodos
 
@@ -7,5 +8,4 @@ public interface Pilha {
     public Object top() throws PilhaVaziaExcecao; //Retorna o ultimo elemento inserido sem remover
     public void push(Object o); //Insere um novo elemento
     public Object pop() throws PilhaVaziaExcecao; //Remove o ultimo elemento inserido e retorna
-    public void empty(); //Esvaziar pilha
 }

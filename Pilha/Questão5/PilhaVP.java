@@ -1,3 +1,6 @@
+package Questão5;
+import Questão2.PilhaVaziaExcecao;
+
 public class PilhaVP implements PilhaColorida{
     private int n; //Capacidade total do array
     private Object pilhaVP[];

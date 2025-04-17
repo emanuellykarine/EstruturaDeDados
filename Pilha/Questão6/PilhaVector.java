@@ -1,4 +1,8 @@
+package Questão6;
 import java.util.Vector;
+
+import Questão2.Pilha;
+import Questão2.PilhaVaziaExcecao;
 
 public class PilhaVector implements Pilha {
     Vector vetor = new Vector();

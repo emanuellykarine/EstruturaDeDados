@@ -1,3 +1,5 @@
+package Questão4;
+
 public class testePilha4 { //Questão 4
 
 	public static void main(String[] args) {			
@@ -11,6 +13,6 @@ public class testePilha4 { //Questão 4
 
 		System.out.println("tamanho antes: " + arrayPilha.size());
 		arrayPilha.empty();
-
+		System.out.println("tamanho depois: " + arrayPilha.size());
 	}
 }

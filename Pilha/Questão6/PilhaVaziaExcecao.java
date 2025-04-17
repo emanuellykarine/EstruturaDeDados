@@ -1,3 +1,4 @@
+package Questão6;
 // Exceção
 public class PilhaVaziaExcecao extends RuntimeException {
 	 public PilhaVaziaExcecao(String err){

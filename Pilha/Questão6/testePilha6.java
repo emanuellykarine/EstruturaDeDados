@@ -1,3 +1,4 @@
+package Questão6;
 public class testePilha6 { //Questão 6
 
 	public static void main(String[] args) {		
