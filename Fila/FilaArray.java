@@ -13,14 +13,14 @@ public class FilaArray implements Fila {
         array = new Object[capacidade];
     }
 
-    // public void enqueue(Object o){
-    //     if (size() = N - 1){
+    public void enqueue(Object o){
+        // if (size() = N - 1){
 
-    //     } else {
-    //         array[f] = o;
-    //         f = (f+1) % N;
-    //     }
-    // }
+        // } else {
+            array[f] = o;
+            f = (f+1) % N;
+        //}
+    }
 
     public Object dequeue() throws FilaVaziaExcecao{
         if (isEmpty()){
