@@ -1,14 +1,12 @@
-package Fila;
+package Fila.FilaComArray;
 
 public class FilaArray implements Fila {
     private int N; //Tamanho do array
     private int i; //Indice do inicio
     private int f; //Indice do proximo
     private Object[] array;
-    private int incremento; //Tipo de incremento: duplicação ou incremental
 
-    public FilaArray(int N, int incremento) {
-        this.incremento = incremento;
+    public FilaArray(int N) {
         this.N = N;
         array = new Object[N];
     }
@@ -16,12 +14,8 @@ public class FilaArray implements Fila {
     public void enqueue(Object o){
         if (size() == N - 1){ //Se tamanho atual for igual a tamanho total
             int novoTamanho; 
-            if (incremento == 0){ //Duplicação
-                novoTamanho = N * 2;
-            } else { //Incremento
-                novoTamanho = N + incremento;
-            }
-
+            novoTamanho = N * 2; //Duplica o tamanho do array
+            
             Object[] novoArray = new Object[novoTamanho]; //Cria o array com o novo tamanho
             int novoI = i; //novo I recebe primeira posição da fila
 
