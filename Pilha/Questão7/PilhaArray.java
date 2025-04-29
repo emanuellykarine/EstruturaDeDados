@@ -30,7 +30,7 @@ public class PilhaArray implements Pilha{
                 novoArray[i] = array[i];
             }
 
-            novoArray = array;
+            array = novoArray;
         }
 
         array[++t] = o;
@@ -61,24 +61,53 @@ public class PilhaArray implements Pilha{
         return t+1;
     }
 
+    // public void adicionaPilha(Pilha p){
+    //     int tamanhoP = p.size();
+    //     int capacidade = array.length + tamanhoP;
+    //     Object novoArray[] = new Object[capacidade];
+
+    //     for (int i = 0; i <= t; i++){
+    //         novoArray[i] = array[i];
+    //     }
+
+    //     for (int i = 1; i <= tamanhoP; i++){
+    //         novoArray[capacidade - i] = p.pop();
+    //     }
+
+    //     for (int i = capacidade - tamanhoP; i <= capacidade - 1; i++){
+    //         p.push(novoArray[i]);
+    //     }
+
+    //     array = novoArray;
+    //     t = capacidade - 1; //Funciona o topo mas não o tamanho de P1
+    // }
+
     public void adicionaPilha(Pilha p){
         int tamanhoP = p.size();
-        int capacidade = array.length + tamanhoP;
-        Object novoArray[] = new Object[capacidade];
+        int novoTamanho = this.size() + p.size();
 
-        for (int i = 0; i <= t; i++){
-            novoArray[i] = array[i];
-        }
-
+        // public void addPilha(Pilha p2) {
+        //     PilhaArray pilhaAux = new PilhaArray(p2.size(), -1); // pilha vazia para poder inverter a ordem
+        //     while(!p2.isEmpty()){ // vai inverter a ordem do array para quando for botar em p1, ele não esteja invertido
+        //         try{
+        //             pilhaAux.push(p2.pop());
+        //         }catch(PilhaVaziaExcecao e) {}
+        //     }
+    
+        //     while(!pilhaAux.isEmpty()){
+        //         try{
+        //             Object p = pilhaAux.pop();
+        //             this.push(p);
+        //             p2.push(p); // recolocando na pilha p2 dnv
+        //         }catch(PilhaVaziaExcecao e){}
+        //     }
+        // }
         for (int i = 1; i <= tamanhoP; i++){
-            novoArray[capacidade - i] = p.pop();
+            this.push(p.pop());
         }
 
-        for (int i = capacidade - tamanhoP; i <= capacidade - 1; i++){
-            p.push(novoArray[i]);
+        for (int i = novoTamanho - tamanhoP; i <= novoTamanho - 1; i++){
+            p.push(array[i]);
         }
-
-        array = novoArray;
-        t = capacidade - 1; //Funciona o topo mas não o tamanho de P1
     }
 }

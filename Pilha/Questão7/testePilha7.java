@@ -12,7 +12,7 @@ public class testePilha7 {
 
         p2.push(1);
         p2.push(6);
-        p2.push("xixi");
+        p2.push("algo");
         
         System.out.println("Topo p1: " + p1.top());
         System.out.println("Topo p2: " + p2.top());
