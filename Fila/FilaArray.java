@@ -1,71 +1,73 @@
-package Fila;
+// package Fila;
 
-public class FilaArray implements Fila {
-    private int N; //Tamanho do array
-    private int i; //Indice do inicio
-    private int f; //Indice do proximo
-    private Object[] array;
-    private int incremento; //Tipo de incremento: duplicação ou incremental
+// public package Fila;
 
-    public FilaArray(int N, int incremento) {
-        this.incremento = incremento;
-        this.N = N;
-        array = new Object[N];
-    }
+// public class FilaArray implements Fila {
+//     private int N; //Tamanho do array
+//     private int i; //Indice do inicio
+//     private int f; //Indice do proximo
+//     private Object[] array;
+//     private int incremento; //Tipo de incremento: duplicação ou incremental
 
-    public void enqueue(Object o){
-        if (size() == N - 1){ //Se tamanho atual for igual a tamanho total
-            int novoTamanho; 
-            if (incremento == 0){ //Duplicação
-                novoTamanho = N * 2;
-            } else { //Incremento
-                novoTamanho = N + incremento;
-            }
+//     public FilaArray(int N, int incremento) {
+//         this.incremento = incremento;
+//         this.N = N;
+//         array = new Object[N];
+//     }
 
-            Object[] novoArray = new Object[novoTamanho]; //Cria o array com o novo tamanho
-            int novoI = i; //novo I recebe primeira posição da fila
+//     public void enqueue(Object o){
+//         if (size() == N - 1){ //Se tamanho atual for igual a tamanho total
+//             int novoTamanho; 
+//             if (incremento == 0){ //Duplicação
+//                 novoTamanho = N * 2;
+//             } else { //Incremento
+//                 novoTamanho = N + incremento;
+//             }
 
-            for (int novoF = 0; novoF < size(); novoF++) { //Enquanto novoF for menor do que o tamanho atual
-                novoArray[novoF] = array[novoI]; //novoArray desde a posição 0 recebe valores do array antigo a partir da primeira posição da fila passada
-                novoI = (novoI + 1) % N; //Atualiza valor do novoI, esse calculo serve pro caso da configuração da lista ser diferente
-            }
+//             Object[] novoArray = new Object[novoTamanho]; //Cria o array com o novo tamanho
+//             int novoI = i; //novo I recebe primeira posição da fila
 
-            f = size(); //Final da fila
-            i = 0; //Inicio da fila
-            N=novoTamanho; //Novo tamanho
-            array = novoArray; //Referencia
+//             for (int novoF = 0; novoF < size(); novoF++) { //Enquanto novoF for menor do que o tamanho atual
+//                 novoArray[novoF] = array[novoI]; //novoArray desde a posição 0 recebe valores do array antigo a partir da primeira posição da fila passada
+//                 novoI = (novoI + 1) % N; //Atualiza valor do novoI, esse calculo serve pro caso da configuração da lista ser diferente
+//             }
 
-        } else {
-            array[f] = o; //Final da fila recebe elemento novo
-            f = (f+1) % N; //Atualiza valor do final da fila
-        }
-    }
+//             f = size(); //Final da fila
+//             i = 0; //Inicio da fila
+//             N=novoTamanho; //Novo tamanho
+//             array = novoArray; //Referencia
 
-    public Object dequeue() throws FilaVaziaExcecao{
-        if (isEmpty()){
-            throw new FilaVaziaExcecao("Fila vazia.");
-        }
+//         } else {
+//             array[f] = o; //Final da fila recebe elemento novo
+//             f = (f+1) % N; //Atualiza valor do final da fila
+//         }
+//     }
 
-        Object remover = array[i];
-        i = (i + 1) % N;
-        return remover;
-    }
+//     public Object dequeue() throws FilaVaziaExcecao{
+//         if (isEmpty()){
+//             throw new FilaVaziaExcecao("Fila vazia.");
+//         }
 
-    public Object first() throws FilaVaziaExcecao{
-        if(isEmpty()){
-            throw new FilaVaziaExcecao("Fila vazia.");
-        }
+//         Object remover = array[i];
+//         i = (i + 1) % N;
+//         return remover;
+//     }
 
-        return array[i];
-    }
+//     public Object first() throws FilaVaziaExcecao{
+//         if(isEmpty()){
+//             throw new FilaVaziaExcecao("Fila vazia.");
+//         }
 
-    public int size(){
-        return (N - i + f) % N;
-    }
+//         return array[i];
+//     }
 
-    public boolean isEmpty(){
-        return i == f;
-    }
+//     public int size(){
+//         return (N - i + f) % N;
+//     }
+
+//     public boolean isEmpty(){
+//         return i == f;
+//     }
 
 
-}
+// }
