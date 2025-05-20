@@ -1,6 +1,4 @@
-package Vetor.VetorComArrayCircular;
-
-public interface Vetor {
+public interface Vetor{
     public void insertAtRank(int r, Object o) throws ColocacaoErradaExcecao;
     public Object removeAtRank(int r) throws ColocacaoErradaExcecao;
     public Object replaceAtRank(int r, Object o) throws ColocacaoErradaExcecao;
