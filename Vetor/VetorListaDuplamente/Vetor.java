@@ -1,3 +1,5 @@
+package Vetor.VetorListaDuplamente;
+
 public interface Vetor{
     public void insertAtRank(int r, Object o) throws ColocacaoErradaExcecao;
     public Object removeAtRank(int r) throws ColocacaoErradaExcecao;
