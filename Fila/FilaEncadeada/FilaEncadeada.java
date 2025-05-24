@@ -1,4 +1,4 @@
-package Fila.FilaEncadeada;
+package FilaEncadeada;
 
 public class FilaEncadeada implements Fila{
     private No inicio;

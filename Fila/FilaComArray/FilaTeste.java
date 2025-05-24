@@ -1,4 +1,4 @@
-package Fila.FilaComArray;
+package FilaComArray;
 
 public class FilaTeste {
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package Fila.FilaEncadeada;
+package FilaEncadeada;
 
 public interface Fila {
     public void enqueue(Object o);

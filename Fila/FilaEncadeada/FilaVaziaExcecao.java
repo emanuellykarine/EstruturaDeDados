@@ -1,4 +1,4 @@
-package Fila.FilaEncadeada;
+package FilaEncadeada;
 
 public class FilaVaziaExcecao extends RuntimeException{
     public FilaVaziaExcecao(String err){

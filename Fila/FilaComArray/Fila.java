@@ -1,4 +1,4 @@
-package Fila.FilaComArray;
+package FilaComArray;
 
 public interface Fila {
     public int size(); //Tamanho da fila

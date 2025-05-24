@@ -1,4 +1,4 @@
-package Fila.FilaComDuasPilhas;
+package FilaComDuasPilhas;
 
 public class FilaTeste {
     public static void main(String[] args) {

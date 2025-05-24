@@ -2,7 +2,7 @@ package Vetor.VetorComArray;
 
 public class VetorTeste {
     public static void main(String[] args) {
-        VetorArray v1 = new VetorArray(10);
+        VetorArray v1 = new VetorArray(5);
         
         System.out.println("O vetor está vazio? " + v1.isEmpty());
         
@@ -20,5 +20,12 @@ public class VetorTeste {
         System.out.println(v1.removeAtRank(1));
         v1.print();
     
+        System.out.println("O vetor está vazio? " + v1.isEmpty());
+        System.out.println(v1.removeAtRank(0));
+        v1.print();
+        System.out.println(v1.removeAtRank(1));
+        v1.print();
+      
+        System.out.println("O vetor está vazio? " + v1.isEmpty());
     }
 }

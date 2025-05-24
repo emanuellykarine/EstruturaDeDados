@@ -1,4 +1,4 @@
-package Fila.FilaComDuasPilhas;
+package FilaComDuasPilhas;
 
 public interface Fila {
     public void enqueue(Object o);

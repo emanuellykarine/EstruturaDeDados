@@ -1,4 +1,4 @@
-package Fila.FilaComDuasPilhas;
+package FilaComDuasPilhas;
 
 public class FilaComDuasPilhas implements Fila{
     private int capacidade; //tamanho da fila

@@ -69,6 +69,7 @@ public class VetorEncadeado implements Vetor{
             atual = inicio.getProximo();
             while (r != cont){
                 atual = atual.getProximo();
+                cont++;
             }
         }
 
@@ -91,6 +92,7 @@ public class VetorEncadeado implements Vetor{
         
         while (cont != r){
             atual = atual.getProximo();
+            cont++;
         }
 
         Object antigo = atual.getElemento();
@@ -109,11 +111,8 @@ public class VetorEncadeado implements Vetor{
 
     public void print(){
         No atual = inicio.getProximo();
-        while (atual != null) {
-            System.out.print(atual.getElemento());
-            if (atual.getProximo() != null) {
-                System.out.print(" -> ");
-            }
+        for (int i = 0; i < size(); i++) {
+            System.out.print(atual.getElemento() + " ");
             atual = atual.getProximo();
         }
         System.out.println(); // Pula linha ao final

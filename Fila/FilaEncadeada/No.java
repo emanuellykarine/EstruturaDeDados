@@ -1,4 +1,4 @@
-package Fila.FilaEncadeada;
+package FilaEncadeada;
 
 public class No {
     public Object elemento;

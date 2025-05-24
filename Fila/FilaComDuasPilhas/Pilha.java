@@ -1,4 +1,4 @@
-package Fila.FilaComDuasPilhas;
+package FilaComDuasPilhas;
 
 public interface Pilha {
     public void push(Object o);

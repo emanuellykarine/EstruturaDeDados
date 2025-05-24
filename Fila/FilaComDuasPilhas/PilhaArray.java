@@ -1,4 +1,4 @@
-package Fila.FilaComDuasPilhas;
+package FilaComDuasPilhas;
 
 public class PilhaArray implements Pilha{
     private int capacidade;

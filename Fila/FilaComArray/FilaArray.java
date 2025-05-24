@@ -1,4 +1,4 @@
-package Fila.FilaComArray;
+package FilaComArray;
 
 public class FilaArray implements Fila {
     private int N; //Tamanho do array

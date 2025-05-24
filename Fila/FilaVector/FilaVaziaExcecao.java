@@ -1,4 +1,4 @@
-package Fila.FilaVector;
+package FilaVector;
 
 public class FilaVaziaExcecao extends RuntimeException{
     public FilaVaziaExcecao(String err){

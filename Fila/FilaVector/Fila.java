@@ -1,4 +1,4 @@
-package Fila.FilaVector;
+package FilaVector;
 
 public interface Fila {
     public void enqueue(Object o);
