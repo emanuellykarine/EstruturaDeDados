@@ -5,9 +5,12 @@ public class ListaDuplamenteEncadeada implements Lista{
     private No inicio;
     private No fim;
 
+    //Lista duplamente encadeada com nó sentinela
+    //Nó sentinela não guarda elementos, é uma referencia para o inicio e fim da lista
+    //Só guarda elementos a partir do proximo do inicio
     public ListaDuplamenteEncadeada(){
-        this.inicio = new No(null);
-        this.fim = new No(null);
+        this.inicio = new No(null); //Nó sentinela
+        this.fim = new No(null); //Nó sentinela
         this.size = 0;
     }
 
@@ -16,7 +19,7 @@ public class ListaDuplamenteEncadeada implements Lista{
             throw new ListaExcecao("Lista vazia.");
         }
 
-        return inicio.getProximo();
+        return inicio.getProximo(); //Depois do sentinela
     }
 
     public No last() throws ListaExcecao{
@@ -24,7 +27,7 @@ public class ListaDuplamenteEncadeada implements Lista{
             throw new ListaExcecao("Lista vazia.");
         }
 
-        return fim.getAnterior();
+        return fim.getAnterior();//Antes do sentinela
     }
 
     public No before(No n) throws ListaExcecao{
@@ -60,9 +63,8 @@ public class ListaDuplamenteEncadeada implements Lista{
             throw new ListaExcecao("Nó inválido.");
         }
 
-        No temp = n;
         n.setElemento(o);
-        return temp;
+        return n;
     }
 
     public No insertAfter(No n, Object o) throws ListaExcecao{
@@ -120,10 +122,17 @@ public class ListaDuplamenteEncadeada implements Lista{
     public void insertFirst(Object o){
         No novoNo = new No(o);
 
-        novoNo.setAnterior(inicio);
-        novoNo.setProximo(inicio.getProximo());
-        inicio.getProximo().setAnterior(novoNo);
-        inicio.setProximo(novoNo);
+        if (inicio.getProximo() == null) { //Lista vazia
+            inicio.setProximo(novoNo);
+            fim.setAnterior(novoNo);
+            novoNo.setAnterior(inicio);
+            novoNo.setProximo(fim);
+        } else {
+            novoNo.setAnterior(inicio);
+            novoNo.setProximo(inicio.getProximo());
+            inicio.getProximo().setAnterior(novoNo);
+            inicio.setProximo(novoNo);
+        }
 
         size++;
     }
@@ -131,11 +140,17 @@ public class ListaDuplamenteEncadeada implements Lista{
     public void insertLast(Object o){
         No novoNo = new No(o);
 
-        novoNo.setProximo(fim);
-        novoNo.setAnterior(fim.getAnterior());
-        fim.getAnterior().setProximo(novoNo);
-        fim.setAnterior(novoNo);
-
+        if (fim.getAnterior() == null) { //Lista vazia
+            fim.setAnterior(novoNo);
+            inicio.setProximo(novoNo);
+            novoNo.setAnterior(inicio);
+            novoNo.setProximo(fim);
+        } else {
+           novoNo.setProximo(fim);
+            novoNo.setAnterior(fim.getAnterior());
+            fim.getAnterior().setProximo(novoNo);
+            fim.setAnterior(novoNo); 
+        }
         size++;
     }
 
@@ -186,10 +201,10 @@ public class ListaDuplamenteEncadeada implements Lista{
 
     public void print() {
         No atual = inicio.getProximo();
-
         for (int i = 0; i < size(); i++) {
-            System.out.println(atual + " ");
+            System.out.print(atual.getElemento() + " ");
             atual = atual.getProximo();
         }
+        System.out.println(); // Pula linha ao final
     }
 }

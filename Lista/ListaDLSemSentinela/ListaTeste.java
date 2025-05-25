@@ -1,8 +1,8 @@
-package Lista.ListaDuplamente;
+package Lista.ListaDLSemSentinela;
 
 public class ListaTeste {
     public static void main (String[] args) {
-        ListaDuplamenteEncadeada l1 = new ListaDuplamenteEncadeada();
+        ListaDuplamenteSemSentinela l1 = new ListaDuplamenteSemSentinela();
 
         System.out.println("Lista vazia?" + l1.isEmpty());
         System.out.println("Tamanho:" + l1.size());

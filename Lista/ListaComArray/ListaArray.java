@@ -74,8 +74,8 @@ public class ListaArray implements Lista{
         if (n == size) {
             array[++size] = o;
         } else {
-            for (int i = size; i >= n; i--) {
-                array [i] = array[i-1];
+            for (int i = size; i > n + 1; i--) {
+                array[i] = array[i-1];
             }
 
             array[n+1] = o;
@@ -208,15 +208,12 @@ public class ListaArray implements Lista{
             throw new ListaVaziaExcecao("Lista vazia.");
         }
 
-        if (n > size() || n < size()) {
-            throw new ListaExcecao ("Posição inválida.");
-        }
-
         Object temp = array[n];
-        for (int i = n; i < size(); i++){
+        for (int i = n; i < size - 1; i++){
             array[i] = array[i+1];       
         }
 
+        size--;
         return temp;
 
     }
@@ -231,7 +228,7 @@ public class ListaArray implements Lista{
 
     public void print() {
         for (int i = 0; i < size(); i++) {
-            System.out.println(array[i] + " ");
+            System.out.print(array[i] + " ");
         }
     }
 
