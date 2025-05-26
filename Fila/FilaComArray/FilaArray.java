@@ -29,10 +29,11 @@ public class FilaArray implements Fila {
             N=novoTamanho; //Novo tamanho
             array = novoArray; //Referencia
 
-        } else {
-            array[f] = o; //Final da fila recebe elemento novo
-            f = (f+1) % N; //Atualiza valor do final da fila
-        }
+        } 
+        
+        array[f] = o; //Final da fila recebe elemento novo    
+        f = (f+1) % N; //Atualiza valor do final da fila
+        
     }
 
     public Object dequeue() throws FilaVaziaExcecao{
