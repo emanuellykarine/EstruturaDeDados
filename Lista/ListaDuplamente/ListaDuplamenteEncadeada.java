@@ -54,7 +54,7 @@ public class ListaDuplamenteEncadeada implements Lista{
         return n.getProximo();
     }
 
-    public No replaceElement(No n, Object o) throws ListaExcecao{
+    public Object replaceElement(No n, Object o) throws ListaExcecao{
         if (size() == 0) {
             throw new ListaExcecao("Lista vazia.");
         }
@@ -63,11 +63,12 @@ public class ListaDuplamenteEncadeada implements Lista{
             throw new ListaExcecao("Nó inválido.");
         }
 
+        Object temp = n.getElemento();
         n.setElemento(o);
-        return n;
+        return temp;
     }
 
-    public No insertAfter(No n, Object o) throws ListaExcecao{
+    public void insertAfter(No n, Object o) throws ListaExcecao{
          if (size() == 0) {
             throw new ListaExcecao("Lista vazia.");
         }
@@ -83,10 +84,9 @@ public class ListaDuplamenteEncadeada implements Lista{
         n.setProximo(novoNo);
 
         size++;
-        return novoNo;
     }
 
-    public No insertBefore(No n, Object o) throws ListaExcecao{
+    public void insertBefore(No n, Object o) throws ListaExcecao{
         if (size() == 0) {
             throw new ListaExcecao("Lista vazia.");
         }
@@ -102,7 +102,6 @@ public class ListaDuplamenteEncadeada implements Lista{
         n.setAnterior(novoNo); //Anterior de n aponta para novo nó
 
         size++;
-        return novoNo;
     }
 
     public void swapElements(No n, No q) throws ListaExcecao{
