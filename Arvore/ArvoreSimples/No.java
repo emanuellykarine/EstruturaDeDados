@@ -1,7 +1,6 @@
 package Arvore.ArvoreSimples;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class No {
     private Object elemento;
@@ -34,8 +33,8 @@ public class No {
         filhos.add(n);
     }
 
-    public Iterator getFilhos(){
-        return filhos.iterator();
+    public ArrayList<No> getFilhos() {
+        return filhos;
     }
 
     public int childrenNumber(){

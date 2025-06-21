@@ -4,15 +4,15 @@ import java.util.Iterator;
 public interface ArvoreSimples {
     // Métodos genéricos
     public int size();
-    public int height();
+    public int height(No n);
     public boolean isEmpty();
-    public Iterator elements();
-    public Iterator nos();
+    public Iterator<Object> elements(); //retorna um iterador com todos os elementos da árvore
+    public Iterator<No> nos(); //retorna um iterador com todos os nós
 
     //Métodos de acesso
     public No root();
     public No parent(No n);
-    public Iterator children(No n);
+    public Iterator children(No n); //retorna um iterador com os filhos do nó
 
     //Métodos de consulta
     public boolean isInternal(No n);
@@ -25,7 +25,10 @@ public interface ArvoreSimples {
     public void swapElements(No n, No q);
 
     //Métodos de inserir e remover
-    public void addChildren(No n, Object o);
+    public void addChild(No n, Object o);
     public Object remove(No n); //Só pode remover se for nó externo e que tenha um pai
 
+    //Métodos de travessia
+    public void preOrder(No n);
+    public void postOrder(No n);
 }
