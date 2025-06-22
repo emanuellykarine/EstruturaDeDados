@@ -193,6 +193,7 @@ public class ArvoreBP implements ArvoreBinariaPesquisa{
             temp.setChave(tempChave);
         }
 
+        tamanho--;
         return remover;
     }
 
@@ -241,4 +242,44 @@ public class ArvoreBP implements ArvoreBinariaPesquisa{
     }
 
 
+    public void printArvore(){
+        int altura = height(raiz);
+        int linhas = altura + 1;
+        int colunas = (int) Math.pow(2, linhas) - 1;  //numero total de nós (2^linhas) - 1
+
+        Object[][] matriz = new Object[linhas][colunas];
+        
+        montar(matriz, raiz, 0, (int) colunas /2); //raiz começa no meio da matriz (colunas/2)
+        for (int i = 0; i < linhas; i++){
+            for (int j = 0; j < colunas; j++){
+                if (matriz[i][j] == null){
+                    System.out.print("  ");
+                } else {
+                    System.out.printf("%3s", matriz[i][j]);
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    protected void montar(Object[][] matriz, No n, int linha, int coluna){
+        if (n == null){ //não tem nada mais 
+            return;
+        }
+
+        matriz[linha][coluna] = n.getChave();
+
+        //serve para mostrar onde cada nó vai ser posicionado na arvore, quanto mais desce mais distante fica
+        //divide por 4 por que por 2 seria a metade da matriz, e por 4 é a metade da metade
+        int d = (int) Math.pow(2, matriz.length - linha - 2);
+
+        if (n.getEsquerdo() != null) {
+            montar(matriz, n.getEsquerdo(), linha + 1, coluna - d);
+        }
+
+        if (n.getDireito() != null) {
+            montar(matriz, n.getDireito(), linha + 1, coluna + d);
+        }
+
+    }
 }
