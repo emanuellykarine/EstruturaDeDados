@@ -50,7 +50,7 @@ public class ArvoreBPTeste {
 
         // Testando remoção de nó com um filho
         System.out.println("\n===== Remoção de nó com 1 filho (40) =====");
-        arvore.remove(40);
+        arvore.remove(30);
         arvore.printArvore();
 
         // Testando remoção de nó com dois filhos

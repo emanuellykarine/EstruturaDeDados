@@ -84,22 +84,22 @@ public class Arvore implements ArvoreSimples{
         return n == raiz;
     }
 
-    public int depth(No n){
-        if (isRoot(n)){
-            return 0;
-        } else {
-            return 1 + this.depth(n.getPai());
-        }
-    }
-
-    // public int depth(No n){ forma iterativa
-    //     int cont = 0;
-    //     while (!isRoot(n)){
-    //         cont++;
-    //         n = n.getPai();
+    // public int depth(No n){
+    //     if (isRoot(n)){
+    //         return 0;
+    //     } else {
+    //         return 1 + this.depth(n.getPai());
     //     }
-    //     return cont;
     // }
+
+    public int depth(No n){ //forma iterativa
+        int cont = 0;
+        while (!isRoot(n)){
+            cont++;
+            n = n.getPai();
+        }
+        return cont;
+    }
 
     public Object replace(No n, Object o) {
         Object temp = n.getElemento();
@@ -133,7 +133,7 @@ public class Arvore implements ArvoreSimples{
     }
 
     public void preOrder(No n){
-        System.out.println(n);
+        System.out.println(n.getElemento());
         for (No filho: n.getFilhos()){
             this.preOrder(filho);
         }
@@ -144,7 +144,7 @@ public class Arvore implements ArvoreSimples{
             this.postOrder(filho);
         }
 
-        System.out.println(n);
+        System.out.println(n.getElemento());
     }
 
 }
