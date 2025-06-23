@@ -63,8 +63,7 @@ public class ArvoreTeste {
         // ==============================
         System.out.println("\n===== Teste de remoção =====");
         System.out.println("Removendo o nó G:");
-        No noG = noD.getFilhos().get(0);
-        arvore.remove(noG);
+        arvore.remove(noD.getFilhos().get(0));
         arvore.preOrder(raiz);
 
         // ==============================

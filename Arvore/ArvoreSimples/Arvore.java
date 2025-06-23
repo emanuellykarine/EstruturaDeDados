@@ -15,6 +15,7 @@ public class Arvore implements ArvoreSimples{
         return tamanho;
     }
 
+    //Distancia da raiz ou de um nó até o nó mais externo
     public int height(No n){
         if (isExternal(n)){
             return 0;
@@ -92,6 +93,7 @@ public class Arvore implements ArvoreSimples{
     //     }
     // }
 
+    //Distancia do no ate o raiz
     public int depth(No n){ //forma iterativa
         int cont = 0;
         while (!isRoot(n)){
@@ -121,7 +123,7 @@ public class Arvore implements ArvoreSimples{
 
     public Object remove(No n) throws NoInvalidoExecao{
         No pai = n.getPai();
-        if (pai != null || isExternal(n)){
+        if (pai != null && isExternal(n) || isExternal(n)){
             pai.removeChild(n);
         } else {
             throw new NoInvalidoExecao("Nó inválido");
