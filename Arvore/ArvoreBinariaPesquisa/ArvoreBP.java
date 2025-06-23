@@ -12,7 +12,7 @@ public class ArvoreBP implements ArvoreBinariaPesquisa{
     }
 
     public int size(){
-        return tamanho+1;
+        return tamanho;
     }
 
     public int height(No n) {
