@@ -270,7 +270,6 @@ public class ArvoreBP implements ArvoreBinariaPesquisa{
         matriz[linha][coluna] = n.getChave();
 
         //serve para mostrar onde cada nó vai ser posicionado na arvore, quanto mais desce mais distante fica
-        //divide por 4 por que por 2 seria a metade da matriz, e por 4 é a metade da metade
         int d = (int) Math.pow(2, matriz.length - linha - 2);
 
         if (n.getEsquerdo() != null) {
