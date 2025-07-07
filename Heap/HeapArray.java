@@ -5,7 +5,7 @@ public class HeapArray implements Heap{
 
     public HeapArray(int capacidade){
         this.capacidade = capacidade;
-        array = new Object[capacidade];
+        array = new Object[capacidade + 1];
         size = 0;
     }
 
@@ -13,12 +13,13 @@ public class HeapArray implements Heap{
         if (size == capacidade){
             capacidade = capacidade * 2;
         
-            Object novoArray[] = new Object[capacidade];
+            Object novoArray[] = new Object[capacidade + 1];
             for (int i = 0; i < array.length; i++){
                 novoArray[i] = array[i];  
             }
             array = novoArray;
         }
+        
         array[++size] = o;
         upHeap();
     }
@@ -32,40 +33,52 @@ public class HeapArray implements Heap{
         return remover;
     }
 
-    public void downHeap(){
-        int index = 1;
-        int indexFilhoD = filhoDireito(index);
+    public void downHeap() {
+    int index = 1;
+
+    while (true) {
         int indexFilhoE = filhoEsquerdo(index);
-        while ((int)array[index] > (int)array[indexFilhoE] || (int)array[index] > (int)array[indexFilhoD]){
-            if (array[indexFilhoE] == null && array[indexFilhoD] == null){
-                break;
-            }
+        int indexFilhoD = filhoDireito(index);
 
-            if (array[indexFilhoE] != null && array[indexFilhoD] != null){
-                if (((int)array[index] - (int)array[indexFilhoE]) > ((int)array[index] - (int)array[indexFilhoD])){
-                    swapElements(indexFilhoE, index);
-                    index = indexFilhoE;
-                } else {
-                    swapElements(indexFilhoD, index);
-                    index = indexFilhoD;
-                }
-            } else {
-                swapElements(indexFilhoE, index);
-            }
-            indexFilhoD = filhoDireito(index);
-            indexFilhoE = filhoEsquerdo(index);
+        if (indexFilhoE > size && indexFilhoD > size) {
+            break;
         }
-    }
 
-    public void upHeap(){
-        int index = size;
+        int menorFilho = -1;
+
+        if (indexFilhoE <= size && indexFilhoD <= size) {
+            // Ambos os filhos existem
+            menorFilho = ((int) array[indexFilhoE] < (int) array[indexFilhoD]) ? indexFilhoE : indexFilhoD;
+        } else if (indexFilhoE <= size) {
+            menorFilho = indexFilhoE;
+        } else {
+            menorFilho = indexFilhoD;
+        }
+
+        if ((int) array[index] <= (int) array[menorFilho]) {
+            break;
+        }
+
+        swapElements(index, menorFilho);
+        index = menorFilho;
+    }
+}
+
+
+    public void upHeap() {
+    int index = size;
+    while (index > 1) {
         int indexPai = index / 2;
 
-        while ((int)array[index] < (int)array[indexPai] && index != 1){
+        if ((int)array[index] < (int)array[indexPai]) {
             swapElements(index, indexPai);
             index = indexPai;
+        } else {
+            break;
         }
     }
+}
+
 
     public void swapElements(int n, int p){
         Object provisorio = array[n];
