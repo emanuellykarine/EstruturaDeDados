@@ -11,7 +11,6 @@ public class No {
         valor = o;
     }
 
- 
     public void setPai(No n){
         pai = n;
     }
