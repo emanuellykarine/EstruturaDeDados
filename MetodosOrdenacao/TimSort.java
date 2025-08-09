@@ -61,7 +61,6 @@ public class TimSort {
     public static void TimSort(int array[], int n) {
         int minrun = MinRun(n); // vai calcular o tamanho da minimo de cada run
         int inicio = 0;
-        int i = 0;
         int fim = 0;
 
         // Insertion das Runs
@@ -70,14 +69,17 @@ public class TimSort {
             InsertionSort(array, inicio, fim); // ordenação da run
             inicio += minrun; // o inicio vai ser incrementado pelo tamanho da minrun a cada passo
         }
+        
+        if (minrun < 64) // se for menor do que 64 ele ja vai estar ordenado pelo insertion, pq la no metodo minrun ele só altera o tamanho das run se for n >= 64, caso contrário minrun == n
+            return;
 
         // Merge das Runs
         int tamanho = minrun; // tamanho das primeiras runs que serao mescladas
         int meio;
         while(tamanho < n) {
-            inicio = 0;
+            inicio = 0; // vai percorrer o array a partir do inicio dele e ao longo dos merges vai atualizando
             while(inicio < n) {
-                meio = inicio + tamanho -1;
+                meio = inicio + tamanho -1; // meio é o fim da primeira run que sera mesclada
                 fim = Math.min(inicio + (2 * tamanho) - 1, n-1); // vai evitar que passe o tamanho do array, ou seja min(run ideial, ultimo indice do array)
                 if (meio < fim) // garante que o intervalo  seja valido e que exista runs para mesclar
                     MergeSort(array, inicio, meio, meio+1, fim);
@@ -88,23 +90,9 @@ public class TimSort {
     }
 
     public static void main(String[] args) {
-        int[] array = { 45, 2, 60, 14, 37, 8, 29, 51,
-                        0, 33, 25, 42, 17, 55, 6, 48,
-                        22, 3, 58, 10, 41, 19, 27, 13,
-                        5, 36, 59, 1, 50, 12, 34, 7,
-                        24, 53, 4, 39, 30, 61, 11, 46,
-                        21, 16, 49, 26, 32, 9, 28, 15,
-                        38, 20, 57, 23, 31, 54, 47, 18,
-                        35, 43, 56, 44, 52, 40, 62, 63,
-                        527, 831, 12, 478, 299, 945, 63, 234, 784, 391,
-                        105, 860, 712, 9, 456, 387, 619, 274, 558, 101,
-                        527, 831, 12, 478, 299, 945, 63, 234, 784, 391,
-                        105, 860, 712, 9, 456, 387, 619, 274, 558, 101,
-                        334, 701, 43, 865, 220, 17, 900, 533, 678, 288,
-                        47, 759, 311, 169, 842, 276, 127, 638, 560, 987,
-                        8, 450, 689, 301, 982, 176, 523, 615, 270, 47,
-                        139, 764, 377, 209, 945, 532, 189, 874, 420, 68
-                };
+        int[] array = { -2, 7,  15,  -14, 0, 15,  0, 7,
+                        -7, -4, -13, 5,   8, -14, 12
+                        };
 
         int tamanho = array.length;
         for (int i = 0; i < tamanho; i++) {
