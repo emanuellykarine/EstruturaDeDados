@@ -70,7 +70,7 @@ public class TimSort {
             inicio += minrun; // o inicio vai ser incrementado pelo tamanho da minrun a cada passo
         }
         
-        if (minrun < 64) // se for menor do que 64 ele ja vai estar ordenado pelo insertion, pq la no metodo minrun ele só altera o tamanho das run se for n >= 64, caso contrário minrun == n
+        if (minrun == n) // se for menor do que 64 ele ja vai estar ordenado pelo insertion, pq la no metodo minrun ele só altera o tamanho das run se for n >= 64, caso contrário minrun == n
             return;
 
         // Merge das Runs
