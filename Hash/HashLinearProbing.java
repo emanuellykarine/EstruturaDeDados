@@ -30,7 +30,7 @@ public class HashLinearProbing implements Hash{
 
         int index = hash(chave); //posição inicial na tabela
         while (table[index] != null && table[index].getChave() != chave) {
-            index = (hash(chave) + 1) % capacidade; //fórmula do double hash para encontrar o índice
+            index = (hash(chave) + 1) % capacidade; //fórmula do hash para encontrar o índice
         }
 
         if (table[index] == null || table[index] == Item.AVAILABLE) {
@@ -62,7 +62,7 @@ public class HashLinearProbing implements Hash{
     public Object removeElement(int chave) {
         int index = hash(chave);
         while (table[index] != null && table[index].getChave() != chave) {
-            index = (hash(chave) + 1) % capacidade; //fórmula do double hash para encontrar o índice
+            index = (hash(chave) + 1) % capacidade; //fórmula do hash para encontrar o índice
         }
         
         if (table[index] == null) {

@@ -1,6 +1,6 @@
 package MetodosOrdenacao;
 
-public class InsertionSort {
+public class insertionSort {
     public static void main (String[] args) {
        int[] array = { -2, 7,  15,  -14, 0, 15,  0, 7,
                       -7, -4, -13, 5,   8, -14, 12 };

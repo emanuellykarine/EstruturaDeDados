@@ -1,12 +1,12 @@
 package MetodosOrdenacao;
-public class TimSort {
+public class timSort {
 
     public static int MinRun (int tamanho) { //Comprimento mínimo de uma RUN (subvetor ordenado que compôe o vetor de entrada)
         // Pega os 6 bits mais significativos do tamanho e soma 1 se os bits menos significativos restantes contiverem pelo menos um bit com valor 1
         // Bit menos significativo é o mais à direita e o mais significativo é o mais à esquerda
         int r = 0;
         while (tamanho >= 64) {
-            r = (r | tamanho) & 1;
+            r = (r | tamanho) & 1; //Olha se o ultimo bit é 1
             tamanho >>= 1; // dividi por 2 e deslocando os bits
         }
         return tamanho + r;
@@ -100,14 +100,21 @@ public class TimSort {
         }
         System.out.print("\n");
 
+        long tempoInicial = System.currentTimeMillis();
+
         TimSort(array, tamanho);
+
+        long tempoFinal = System.currentTimeMillis();
 
         for (int i = 0; i < tamanho; i++) {
             System.out.print(array[i] + " ");
         }
         System.out.print("\n");
+
+        System.out.println("Tempo de execução em segundos: " + (tempoFinal - tempoInicial) / 1000);
     }
 }
+
 
 /* Exemplo 1 com 30 elementos
 { 17, 3, 29, 0, 8, 22, 15, 6, 1, 27,
@@ -128,4 +135,18 @@ Exemplo 2 com 64 elementos
 Exemplo 3 com 15 elementos
      -2, 7,  15,  -14, 0, 15,  0, 7,
      -7, -4, -13, 5,   8, -14, 12
-*/
+
+Exemplo 4 com 100 elementos
+{
+    95, 50, 46, 89, 29, 76, 62, 7, 97, 53,
+    2, 10, 91, 83, 67, 59, 60, 88, 23, 20,
+    11, 78, 100, 96, 44, 81, 68, 5, 37, 24,
+    31, 48, 69, 74, 64, 70, 84, 55, 86, 34,
+    92, 15, 40, 57, 33, 30, 36, 39, 43, 73,
+    41, 35, 79, 71, 4, 82, 38, 58, 25, 56,
+    51, 65, 13, 28, 45, 42, 72, 49, 3, 19,
+    6, 27, 90, 17, 32, 99, 18, 47, 77, 14,
+    66, 9, 85, 22, 94, 63, 75, 26, 12, 87,
+    1, 93, 80, 21, 54, 61, 8, 52, 98, 16
+}
+    */

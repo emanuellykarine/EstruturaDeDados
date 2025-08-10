@@ -1,9 +1,4 @@
 package MetodosOrdenacao;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.FileReader;
 
 public class mergeSort{
     //Função que mescla os subarrays ordenados
@@ -52,26 +47,22 @@ public class mergeSort{
     } 
 
     public static void main(String[] args){
-        List<Integer> lista = new ArrayList<>();
-        try(BufferedReader br = new BufferedReader(new FileReader(args[0]))){ //leitura do arquivo
-            String line = br.readLine(); //linha por linha
-            
-            while (line != null){
-                lista.add(Integer.parseInt(line)); //guarda linha na lista transformando para inteiro
-                line = br.readLine();     
-            }
+        
+        int[] array = {45, 2, 60, 14, 37, 8, 29, 51,
+            0, 33, 25, 42, 17, 55, 6, 48,
+            22, 3, 58, 10, 41, 19, 27, 13,
+            5, 36, 59, 1, 50, 12, 34, 7,
+            24, 53, 4, 39, 30, 61, 11, 46,
+            21, 16, 49, 26, 32, 9, 28, 15,
+            38, 20, 57, 23, 31, 54, 47, 18,
+            35, 43, 56, 44, 52, 40, 62, 63};
 
-            int[] array = lista.stream().mapToInt(i -> i).toArray();
+        long tempoInicial = System.currentTimeMillis(); //tempo inicial antes da execução do código
+        sort(array, 0, array.length - 1); //Primeira chamada do merge Sort
 
-            long tempoInicial = System.currentTimeMillis(); //tempo inicial antes da execução do código
-            sort(array, 0, array.length - 1); //Primeira chamada do merge Sort
-
-            System.out.print("tempo de execução:" + (System.currentTimeMillis() - tempoInicial) + " milisegundos \n"); 
-            for (int i = 0; i < array.length; i++){
-                System.out.println(array[i]);
-            }
-        } catch (IOException e){
-            System.err.println("Erro ao ler o arquivo: " + e.getMessage());
+        System.out.print("tempo de execução:" + (System.currentTimeMillis() - tempoInicial) + " milisegundos \n"); 
+        for (int i = 0; i < array.length; i++){
+            System.out.println(array[i]);
         }
-    }        
-} 
+    }
+}        
