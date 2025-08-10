@@ -1,14 +1,13 @@
 package MetodosOrdenacao;
-
 public class TimSort {
 
     public static int MinRun (int tamanho) { //Comprimento mínimo de uma RUN (subvetor ordenado que compôe o vetor de entrada)
         // Pega os 6 bits mais significativos do tamanho e soma 1 se os bits menos significativos restantes contiverem pelo menos um bit com valor 1
         // Bit menos significativo é o mais à direita e o mais significativo é o mais à esquerda
-        int r = 0; 
+        int r = 0;
         while (tamanho >= 64) {
             r = (r | tamanho) & 1;
-            tamanho++;
+            tamanho >>= 1; // dividi por 2 e deslocando os bits
         }
         return tamanho + r;
     }
@@ -28,7 +27,7 @@ public class TimSort {
     }
 
     public static void MergeSort(int[] array, int esquerda, int meio, int meio2, int direita) {
-         int arrayTemp[] = new int[((meio - esquerda) + (direita - meio2) + 2)]; //Array temporário que vai conter os elementos dos dois subarrays, o calculo é feito dessa forma pois 
+        int arrayTemp[] = new int[((meio - esquerda) + (direita - meio2) + 2)]; //Array temporário que vai conter os elementos dos dois subarrays, o calculo é feito dessa forma pois
         //é um array só que foi dividido em dois pedaços ou seja os indice partem desses pedaços
         int i, j, k;
         i = esquerda; //Variável i recebe começo do primeiro subarray
@@ -60,13 +59,41 @@ public class TimSort {
     }
 
     public static void TimSort(int array[], int n) {
+        int minrun = MinRun(n); // vai calcular o tamanho da minimo de cada run
+        int inicio = 0;
+        int fim = 0;
 
+        // Insertion das Runs
+        while(inicio < n) { // vai  ordenar com o insertion enquanto tiver elementos para ordenar
+            fim = Math.min(inicio+minrun - 1, n-1); // vai evitar que passe o tamanho do array, ou seja min(run ideial, ultimo indice do array)
+            InsertionSort(array, inicio, fim); // ordenação da run
+            inicio += minrun; // o inicio vai ser incrementado pelo tamanho da minrun a cada passo
+        }
+        
+        if (minrun == n) // se for menor do que 64 ele ja vai estar ordenado pelo insertion, pq la no metodo minrun ele só altera o tamanho das run se for n >= 64, caso contrário minrun == n
+            return;
+
+        // Merge das Runs
+        int tamanho = minrun; // tamanho das primeiras runs que serao mescladas
+        int meio;
+        while(tamanho < n) {
+            inicio = 0; // vai percorrer o array a partir do inicio dele e ao longo dos merges vai atualizando
+            while(inicio < n) {
+                meio = inicio + tamanho -1; // meio é o fim da primeira run que sera mesclada
+                fim = Math.min(inicio + (2 * tamanho) - 1, n-1); // vai evitar que passe o tamanho do array, ou seja min(run ideial, ultimo indice do array)
+                if (meio < fim) // garante que o intervalo  seja valido e que exista runs para mesclar
+                    MergeSort(array, inicio, meio, meio+1, fim);
+                inicio += 2 * tamanho;
+            }
+            tamanho*=2; // tamanho atual das minruns que serão mescladas
+        }
     }
 
     public static void main(String[] args) {
         int[] array = { -2, 7,  15,  -14, 0, 15,  0, 7,
-                      -7, -4, -13, 5,   8, -14, 12 };
-        
+                        -7, -4, -13, 5,   8, -14, 12
+                        };
+
         int tamanho = array.length;
         for (int i = 0; i < tamanho; i++) {
             System.out.print(array[i] + " ");
@@ -81,3 +108,24 @@ public class TimSort {
         System.out.print("\n");
     }
 }
+
+/* Exemplo 1 com 30 elementos
+{ 17, 3, 29, 0, 8, 22, 15, 6, 1, 27,
+  10, 14, 19, 5, 30, 13, 21, 4, 25, 9,
+  11, 7, 2, 20, 18, 23, 16, 28, 12, 24
+};
+
+Exemplo 2 com 64 elementos
+    45, 2, 60, 14, 37, 8, 29, 51,
+    0, 33, 25, 42, 17, 55, 6, 48,
+    22, 3, 58, 10, 41, 19, 27, 13,
+    5, 36, 59, 1, 50, 12, 34, 7,
+    24, 53, 4, 39, 30, 61, 11, 46,
+    21, 16, 49, 26, 32, 9, 28, 15,
+    38, 20, 57, 23, 31, 54, 47, 18,
+    35, 43, 56, 44, 52, 40, 62, 63
+
+Exemplo 3 com 15 elementos
+     -2, 7,  15,  -14, 0, 15,  0, 7,
+     -7, -4, -13, 5,   8, -14, 12
+*/
