@@ -91,14 +91,6 @@ public class HeapNo implements Heap{
     }
 
     public No ultimo(){
-        /* da errado nesse caso se eu for remover o h
-              a
-             / \
-             b   c
-            / \ / \
-           d  e f  g
-          /
-         h */
         No atual = ultimoNo;
         
         if (isRoot(atual)){
