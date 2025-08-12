@@ -105,17 +105,17 @@ public class HeapNo implements Heap{
             return atual;
         }
 
-        while (!isRoot(atual)) {
+        while (atual.getPai().getEsquerdo() == atual && !isRoot(atual)) {
             atual = atual.getPai();
         }
 
-        if (atual.getDireito() != null && isExternal(atual.getDireito())){
-            return atual.getDireito();
+        if (!isRoot(atual)){
+            atual = atual.getPai().getEsquerdo();
+        } else {
+            atual = raiz;
         }
 
-        atual = atual.getEsquerdo();
-
-        while (atual.getDireito() != null) {
+        while (!isExternal(atual)) {
             atual = atual.getDireito();
         }
         
