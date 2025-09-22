@@ -26,7 +26,7 @@ public class AVLClasse implements AVLInterface{
         } else {
             noPai.setDireito(novoNo);
             novoNo.setPai(noPai);
-            while (noPai.getFB() == 0){
+            while (noPai.getFB() != 0){
                 noPai.setFB(getFB() - 1);
                 noPai = noPai.getPai();
                 if (noPai.getFB() >= 2 || noPai.getFB() <= -2){
