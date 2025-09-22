@@ -1,11 +1,11 @@
 package Arvore.ArvoreBinariaPesquisa;
 
 public class No {
-    private Object chave;
-    private No pai;
-    private No esquerdo;
-    private No direito;
-    private int nFilhos;
+    protected Object chave;
+    protected No pai;
+    protected No esquerdo;
+    protected No direito;
+    protected int nFilhos;
 
     public No (No p, Object o){
         chave = o;
