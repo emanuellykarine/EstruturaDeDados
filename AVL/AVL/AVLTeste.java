@@ -29,7 +29,5 @@ public class AVLTeste{
 
         avl.printArvore();
         System.out.println();
-        
-
     }
 }

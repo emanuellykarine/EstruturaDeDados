@@ -3,8 +3,8 @@ import java.util.Iterator;
 import java.util.ArrayList;
 
 public class ArvoreBP implements ArvoreBinariaPesquisa{
-    No raiz;
-    int tamanho;
+    protected No raiz;
+    protected int tamanho;
 
     public ArvoreBP (Object o) {
         raiz = new No(null, o);

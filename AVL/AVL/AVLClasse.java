@@ -8,8 +8,7 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
     int tamanho;
 
     public AVLClasse (Object o) {
-        super(o); // Chama o construtor da classe pai ArvoreBP
-        // Substitui a raiz criada pela pai por uma NoAVL
+        super(o); 
         raiz = new NoAVL(null, o, 0);
     }
 
@@ -26,15 +25,6 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
                 rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
             }
         }
-
-        if (noPai.getDireito() != null) {
-            System.out.println("pai" + noPai.getChave());
-            System.out.println("direio:" + noPai.getDireito().getChave());
-        }
-        if (noPai.getEsquerdo() != null) {
-            System.out.println("pai" + noPai.getChave());
-            System.out.println("esquerdo" + noPai.getEsquerdo().getChave());
-        }
     }
 
     public void newFBRemoval(NoAVL noPai){
@@ -50,18 +40,8 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
                 rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
             }
         }
-
-        if (noPai.getDireito() != null) {
-            System.out.println("pai" + noPai.getChave());
-            System.out.println("direio:" + noPai.getDireito().getChave());
-        }
-        if (noPai.getEsquerdo() != null) {
-            System.out.println("pai" + noPai.getChave());
-            System.out.println("esquerdo" + noPai.getEsquerdo().getChave());
-        }
     }
 
-    @Override
     public void addChild(Object chave){
         NoAVL noPai = (NoAVL) treeSearch(raiz, chave);
         NoAVL novoNo = new NoAVL(noPai, chave, 0);
@@ -81,7 +61,6 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         tamanho++;
     }
 
-    @Override
     public Object remove(Object chave){
         NoAVL temp = (NoAVL) treeSearch(raiz, chave);
         Object remover = temp.getChave();
@@ -101,7 +80,7 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
                 pai.setFB(pai.getFB() + 1); // atualiza fb antecessor e começa a regra 
                 newFBRemoval(pai);
             }
-            
+
         } else if (temp.getDireito() == null && temp.getEsquerdo() != null || temp.getDireito() != null && temp.getEsquerdo() == null) { //tem um filho
             NoAVL filho = (NoAVL) ((hasLeft(temp)) ? temp.getEsquerdo() : temp.getDireito());
 
@@ -122,6 +101,7 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
                 }
                 filho.setPai(pai);
             }
+        
         } else { //tem dois filhos
             NoAVL substituto = (NoAVL) sucessor((NoAVL) temp.getDireito());
             Object tempChave = substituto.getChave();
@@ -145,26 +125,30 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             simpleRightRotation(a,(NoAVL)a.getEsquerdo()); // fb igual a -2 e sinais diferentes dupla a esquerda
             simpleLeftRotation(p,a);
         }
+
     }
 
     public void simpleRightRotation(NoAVL p, NoAVL a){
         NoAVL v = (NoAVL)p.getPai();
         if (v != null){
             a.setPai(v);
-            p.setPai(a); 
-            v.setDireito(a);
+            if (v.getEsquerdo() == p) {
+                v.setEsquerdo(a);
+            } else {
+                v.setDireito(a);
+            }
         }else {
             a.setPai(null);
             raiz = a;
-            p.setPai(a);
         }
 
         if (a.getDireito() != null){
             NoAVL direito = (NoAVL)a.getDireito();
-            a.setDireito(p);
             p.setEsquerdo(direito);
             direito.setPai(p);
-        }
+        }  
+        a.setDireito(p);
+        p.setPai(a);
 
         int fb_p = p.getFB() - 1 - Math.min(a.getFB(), 0);
         int fb_a = a.getFB() - 1 + Math.max(fb_p, 0);
@@ -176,20 +160,23 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         NoAVL v = (NoAVL)p.getPai();
         if (v != null){
             a.setPai(v);
-            p.setPai(a); 
-            v.setEsquerdo(a);
-        }else {
+            if (v.getEsquerdo() == p) {
+                v.setEsquerdo(a);
+            } else {
+                v.setDireito(a);
+            }
+        } else {
             a.setPai(null);
             raiz = a;
-            p.setPai(a);
         }
 
         if (a.getEsquerdo() != null){
             NoAVL esquerdo = (NoAVL)a.getEsquerdo();
-            a.setEsquerdo(p);
             p.setDireito(esquerdo);
             esquerdo.setPai(p);
         }
+        a.setEsquerdo(p);
+        p.setPai(a);
 
         int fb_p = p.getFB() + 1 - Math.min(a.getFB(), 0);
         int fb_a = a.getFB() + 1 + Math.max(fb_p, 0);
@@ -197,10 +184,47 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         a.setFB(fb_a);
     }
 
-    // Sobrescrevendo printArvore para usar NoAVL
-    @Override
+    //Sobrescrevendo métodos pra trabalhar com a classe NoAVL 
+    public NoAVL leftChild(NoAVL n) {
+        return ((NoAVL)n.getEsquerdo());
+    }
+
+    public NoAVL rightChild(NoAVL n){
+        return ((NoAVL)n.getDireito());
+    }
+
+    public boolean hasLeft(NoAVL n){
+        return leftChild(n) != null;
+    }
+
+    public boolean hasRight(NoAVL n){
+        return rightChild(n) != null;
+    }
+
+    public boolean isExternal(NoAVL n){
+        return !hasLeft(n) && !hasRight(n);
+    }
+
+    public int height(NoAVL n) {
+        if (n == null || isExternal(n)){
+            return 0;
+        } else {
+            int hDireito = 0;
+            int hEsquerda = 0;
+            try{
+                hEsquerda = this.height((NoAVL)n.getEsquerdo());
+                hDireito = this.height((NoAVL)n.getDireito()); 
+            } catch (Exception erro){
+                System.out.println(erro);
+            }
+            
+            
+            return 1 + Math.max(hEsquerda, hDireito);
+        }
+    }
+
     public void printArvore(){
-        int altura = height(raiz);
+        int altura = height(raiz); 
         int linhas = altura + 1;
         int colunas = (int) Math.pow(2, linhas) - 1;  //numero total de nós (2^linhas) - 1
 
@@ -224,7 +248,7 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             return;
         }
 
-        matriz[linha][coluna] = n.getChave() + "[" + n.getFB() + "]";
+        matriz[linha][coluna] = n.getChave() + "[" + n.getFB() + "]"; //coloca o nó na matriz com o fb
 
         //serve para mostrar onde cada nó vai ser posicionado na arvore, quanto mais desce mais distante fica
         int d = (int) Math.pow(2, matriz.length - linha - 2);
