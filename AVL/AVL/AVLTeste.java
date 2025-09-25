@@ -48,5 +48,33 @@ public class AVLTeste{
         avl3.addChild(60);
     
         avl3.printArvore();
+
+        System.out.println("AVL 4");
+        AVLClasse avl4 = new AVLClasse(10);
+        avl4.addChild(20);
+        avl4.addChild(30);
+        avl4.printArvore();
+        System.out.println();
+
+        avl4.addChild(80);
+        avl4.addChild(70);
+        avl4.printArvore();
+        System.out.println();
+
+        avl4.addChild(40);
+        avl4.printArvore();
+        System.out.println();
+
+        avl4.remove(40);
+        avl4.printArvore();
+        System.out.println();
+
+        avl4.remove(70);
+        avl4.printArvore();
+        System.out.println();
+
+        avl4.remove(80);
+        avl4.printArvore();
+        System.out.println();
     }
 }

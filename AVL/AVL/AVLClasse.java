@@ -25,6 +25,15 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
                 rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
             }
         }
+        
+        if (noPai.getPai() == null && noPai.getFB() != 0){
+            if (noPai.getFB() >= 2 && noPai.getEsquerdo() != null){ // se o fator de balanceamento for maior que 2 é por que ele ta grande pra esquerda então passa o pai e o filho esquerdo
+                rotation((NoAVL) noPai, (NoAVL)noPai.getEsquerdo()); //vai servir pra ver qual tipo de rotação fazer
+
+            }else if (noPai.getFB() <= -2 && noPai.getDireito() != null) { //senão passa o pai e o filho direito por que ta grande pra direita
+                rotation((NoAVL) noPai, (NoAVL)noPai.getDireito()); //vai servir pra ver qual tipo de rotação fazer
+            }
+        }
     }
 
     public void newFBRemoval(NoAVL noPai){
@@ -39,6 +48,15 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             if (noPai.getFB() >= 2 || noPai.getFB() <= -2){ // depois que atualiza vê se o fb é 2 ou -2 e chama a rotação passando o fb do pai e do atual
                 rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
             }
+        } 
+
+        if (noPai.getPai() == null && noPai.getFB() != 0){
+            if (noPai.getFB() >= 2 && noPai.getEsquerdo() != null){ // se o fator de balanceamento for maior que 2 é por que ele ta grande pra esquerda então passa o pai e o filho esquerdo
+                rotation((NoAVL) noPai, (NoAVL)noPai.getEsquerdo()); //vai servir pra ver qual tipo de rotação fazer
+
+            }else if (noPai.getFB() <= -2 && noPai.getDireito() != null) { //senão passa o pai e o filho direito por que ta grande pra direita
+                rotation((NoAVL) noPai, (NoAVL)noPai.getDireito()); //vai servir pra ver qual tipo de rotação fazer
+            }
         }
     }
 
@@ -49,12 +67,16 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         if((int) noPai.getChave() > (int) chave){
             noPai.setEsquerdo(novoNo);
             novoNo.setPai(noPai);
-            noPai.setFB(noPai.getFB() + 1); // atualiza fb antecessor e começa a regra
+            if (noPai.getFB() < 2 ||  noPai.getFB() > -2){
+                noPai.setFB(noPai.getFB() + 1); // atualiza fb antecessor e começa a regra
+            }
             newFBIntersection(noPai);
         } else { //inserção do lado direito
             noPai.setDireito(novoNo);
             novoNo.setPai(noPai);
+            if (noPai.getFB() < 2 ||  noPai.getFB() > -2){
             noPai.setFB(noPai.getFB() - 1); // atualiza fb antecessor e começa a regra 
+            }
             newFBIntersection(noPai);
         }
        
@@ -73,11 +95,15 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
                 raiz = null;
             } else if (pai.getEsquerdo() == temp) {
                 pai.setEsquerdo(null);
-                pai.setFB(pai.getFB() - 1); // atualiza fb antecessor e começa a regra
+                if (pai.getFB() < 2 ||  pai.getFB() > -2){
+                    pai.setFB(pai.getFB() - 1); // atualiza fb antecessor e começa a regra
+                }
                 newFBRemoval(pai);
             } else {
                 pai.setDireito(null);
-                pai.setFB(pai.getFB() + 1); // atualiza fb antecessor e começa a regra 
+                if (pai.getFB() < 2 ||  pai.getFB() > -2){
+                    pai.setFB(pai.getFB() + 1); // atualiza fb antecessor e começa a regra
+                }
                 newFBRemoval(pai);
             }
 
@@ -92,11 +118,15 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             } else {
                 if (pai.getEsquerdo() == temp) {
                     pai.setEsquerdo(filho);
-                    pai.setFB(pai.getFB() - 1); // atualiza fb antecessor e começa a regra
+                    if (pai.getFB() < 2 ||  pai.getFB() > -2){
+                        pai.setFB(pai.getFB() - 1); // atualiza fb antecessor e começa a regra
+                    }
                     newFBRemoval(pai);
                 } else {
                     pai.setDireito(filho);
-                    pai.setFB(pai.getFB() + 1); // atualiza fb antecessor e começa a regra 
+                    if (pai.getFB() < 2 ||  pai.getFB() > -2){
+                        pai.setFB(pai.getFB() + 1); // atualiza fb antecessor e começa a regra
+                    }
                     newFBRemoval(pai);
                 }
                 filho.setPai(pai);
@@ -115,22 +145,30 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
 
     public void rotation(NoAVL p, NoAVL a){
         //fb igual a 2 e sinais iguais simples a direita
-        if (p.getFB() == 2 && a.getFB() > 0){ 
+        if (p.getFB() >= 2 && a.getFB() > 0){ 
             simpleRightRotation(p,a); 
         
         //fb igual -2 e sinais iguais simples a esquerda
-        } else if (p.getFB() == -2 && a.getFB() < 0){ 
+        } else if (p.getFB() <= -2 && a.getFB() < 0){ 
             simpleLeftRotation(p,a);
 
         //fb igual a 2 e sinais diferentes dupla a direita
-        } else if (p.getFB() == 2 && a.getFB() < 0) { 
-            simpleLeftRotation(a,(NoAVL)a.getDireito()); //faz primeiro a rotação interna pra esquerda passando o filho e o filho direito do filho
-            simpleRightRotation(p,(NoAVL) p.getEsquerdo()); //faz a rotação externa pra direita com o pai e o filho esquerdo dele 
+        } else if (p.getFB() >= 2 && a.getFB() < 0) { 
+            if (a.getDireito() != null) {
+                simpleLeftRotation(a,(NoAVL)a.getDireito()); //faz primeiro a rotação interna pra esquerda passando o filho e o filho direito do filho
+            }
+            if (p.getEsquerdo() != null) {
+                simpleRightRotation(p,(NoAVL) p.getEsquerdo()); //faz a rotação externa pra direita com o pai e o filho esquerdo dele 
+            }
         
         // fb igual a -2 e sinais diferentes dupla a esquerda
         } else { 
-            simpleRightRotation(a,(NoAVL)a.getEsquerdo()); //faz primeiro a rotação interna pra direita passando o filho e o filho esquerdo dele
-            simpleLeftRotation(p,(NoAVL) p.getDireito()); //faz a rotação externa pra esquerda com o pai e o filho direito dele
+            if (a.getEsquerdo() != null) {
+                simpleRightRotation(a,(NoAVL)a.getEsquerdo()); //faz primeiro a rotação interna pra direita passando o filho e o filho esquerdo dele
+            }
+            if (p.getDireito() != null) {
+                simpleLeftRotation(p,(NoAVL) p.getDireito()); //faz a rotação externa pra esquerda com o pai e o filho direito dele
+            }
         }
     }
 
