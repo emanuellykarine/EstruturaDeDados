@@ -59,6 +59,16 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             noPai.setFB(noPai.getFB() - 1); // atualiza fb antecessor e começa a regra 
             newFBIntersection(noPai);
         }
+
+        if (noPai.getDireito() != null) {
+            System.out.println("pai" + noPai.getChave());
+            System.out.println("direio:" + noPai.getDireito().getChave());
+        }
+        if (noPai.getEsquerdo() != null) {
+            System.out.println("pai" + noPai.getChave());
+            System.out.println("esquerdo" + noPai.getEsquerdo().getChave());
+        }
+       
         tamanho++;
     }
 
@@ -120,18 +130,32 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         } else if (p.getFB() == -2 && a.getFB() < 0){ //fb igual -2 e sinais iguais simples a esquerda
             simpleLeftRotation(p,a);
         } else if (p.getFB() == 2 && a.getFB() < 0) { //fb igual a 2 e sinais diferentes dupla a direita
-            simpleLeftRotation(p,a);
+            simpleLeftRotation(a,(NoAVL)a.getDireito());
             simpleRightRotation(p,a);
         } else {
-            simpleRightRotation(p,a); // fb igual a -2 e sinais diferentes dupla a esquerda
+            simpleRightRotation(a,(NoAVL)a.getEsquerdo()); // fb igual a -2 e sinais diferentes dupla a esquerda
             simpleLeftRotation(p,a);
         }
     }
 
     public void simpleRightRotation(NoAVL p, NoAVL a){
-        a.setPai((NoAVL) p.getPai());
-        p.setPai(a);
-        //ajeitar referencias não funciona
+        NoAVL v = (NoAVL)p.getPai();
+        if (v != null){
+            a.setPai(v);
+            p.setPai(a); 
+            v.setDireito(a);
+        }else {
+            a.setPai(null);
+            raiz = a;
+            p.setPai(a);
+        }
+
+        if (a.getDireito() != null){
+            NoAVL direito = (NoAVL)a.getDireito();
+            a.setDireito(p);
+            p.setEsquerdo(direito);
+            direito.setPai(p);
+        }
 
         int fb_p = p.getFB() - 1 - Math.min(a.getFB(), 0);
         int fb_a = a.getFB() - 1 + Math.max(fb_p, 0);
@@ -140,9 +164,23 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
     }
 
     public void simpleLeftRotation(NoAVL p, NoAVL a){
-        a.setPai((NoAVL) p.getPai());
-        p.setPai(a);
-        //ajeitar referencias não funciona
+        NoAVL v = (NoAVL)p.getPai();
+        if (v != null){
+            a.setPai(v);
+            p.setPai(a); 
+            v.setEsquerdo(a);
+        }else {
+            a.setPai(null);
+            raiz = a;
+            p.setPai(a);
+        }
+
+        if (a.getEsquerdo() != null){
+            NoAVL esquerdo = (NoAVL)a.getEsquerdo();
+            a.setEsquerdo(p);
+            p.setDireito(esquerdo);
+            esquerdo.setPai(p);
+        }
 
         int fb_p = p.getFB() + 1 - Math.min(a.getFB(), 0);
         int fb_a = a.getFB() + 1 + Math.max(fb_p, 0);
@@ -172,7 +210,6 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         }
     }
 
-    
     protected void montar(Object[][] matriz, NoAVL n, int linha, int coluna){
         if (n == null){ //não tem nada mais 
             return;

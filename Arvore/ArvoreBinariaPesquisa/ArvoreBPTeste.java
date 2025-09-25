@@ -3,17 +3,15 @@ package Arvore.ArvoreBinariaPesquisa;
 public class ArvoreBPTeste {
     public static void main(String[] args) {
         // Cria uma árvore com raiz 50
-        ArvoreBP arvore = new ArvoreBP(50);
+        ArvoreBP arvore = new ArvoreBP(10);
 
         // Adicionando nós
-        arvore.addChild(30);
-        arvore.addChild(70);
-        arvore.addChild(20);
-        arvore.addChild(40);
-        arvore.addChild(60);
-        arvore.addChild(80);
-        arvore.addChild(35);
-        arvore.addChild(45);
+        arvore.addChild(5);
+        arvore.addChild(15);
+        arvore.addChild(2);
+        arvore.addChild(8);
+        arvore.addChild(22);
+        arvore.addChild(25);
 
         System.out.println("\n===== ÁRVORE IMPRESSA =====");
         arvore.printArvore();
