@@ -22,11 +22,18 @@ public class AVLTeste{
         avl.printArvore();
         System.out.println();
 
+
         System.out.println("AVL 2 Rotação dupla a direita");
         AVLClasse avl2 = new AVLClasse(50);
         avl2.addChild(20);
+        avl2.printArvore();
+        System.out.println();
         avl2.addChild(90);
+        avl2.printArvore();
+        System.out.println();
         avl2.addChild(10);
+        avl2.printArvore();
+        System.out.println();
         avl2.addChild(40);
 
         avl2.printArvore();
@@ -34,6 +41,10 @@ public class AVLTeste{
         avl2.addChild(30);
     
         avl2.printArvore();
+        System.out.println();
+
+        avl.remove(40);
+        avl.printArvore();
         System.out.println();
 
         System.out.println("AVL 3 Rotação dupla a esquerda");
@@ -57,6 +68,9 @@ public class AVLTeste{
         System.out.println();
 
         avl4.addChild(80);
+        avl4.printArvore();
+        System.out.println();
+        
         avl4.addChild(70);
         avl4.printArvore();
         System.out.println();
