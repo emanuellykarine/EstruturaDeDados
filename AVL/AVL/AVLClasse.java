@@ -114,41 +114,49 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
     }
 
     public void rotation(NoAVL p, NoAVL a){
-        if (p.getFB() == 2 && a.getFB() > 0){ //fb igual a 2 e sinais iguais simples a direita
-            simpleRightRotation(p,a);
-        } else if (p.getFB() == -2 && a.getFB() < 0){ //fb igual -2 e sinais iguais simples a esquerda
+        //fb igual a 2 e sinais iguais simples a direita
+        if (p.getFB() == 2 && a.getFB() > 0){ 
+            simpleRightRotation(p,a); 
+        
+        //fb igual -2 e sinais iguais simples a esquerda
+        } else if (p.getFB() == -2 && a.getFB() < 0){ 
             simpleLeftRotation(p,a);
-        } else if (p.getFB() == 2 && a.getFB() < 0) { //fb igual a 2 e sinais diferentes dupla a direita
-            simpleLeftRotation(a,(NoAVL)a.getDireito());
-            simpleRightRotation(p,a);
-        } else {
-            simpleRightRotation(a,(NoAVL)a.getEsquerdo()); // fb igual a -2 e sinais diferentes dupla a esquerda
-            simpleLeftRotation(p,a);
-        }
 
+        //fb igual a 2 e sinais diferentes dupla a direita
+        } else if (p.getFB() == 2 && a.getFB() < 0) { 
+            simpleLeftRotation(a,(NoAVL)a.getDireito()); //faz primeiro a rotação interna pra esquerda passando o filho e o filho direito do filho
+            simpleRightRotation(p,(NoAVL) p.getEsquerdo()); //faz a rotação externa pra direita com o pai e o filho esquerdo dele 
+        
+        // fb igual a -2 e sinais diferentes dupla a esquerda
+        } else { 
+            simpleRightRotation(a,(NoAVL)a.getEsquerdo()); //faz primeiro a rotação interna pra direita passando o filho e o filho esquerdo dele
+            simpleLeftRotation(p,(NoAVL) p.getDireito()); //faz a rotação externa pra esquerda com o pai e o filho direito dele
+        }
     }
 
     public void simpleRightRotation(NoAVL p, NoAVL a){
-        NoAVL v = (NoAVL)p.getPai();
-        if (v != null){
-            a.setPai(v);
-            if (v.getEsquerdo() == p) {
+        NoAVL v = (NoAVL)p.getPai(); //pega o avô
+        if (v != null){ //se não é null
+            a.setPai(v); //seta o avô como pai do filho
+            if (v.getEsquerdo() == p) { //se o pai for filho esquerdo do avô seta o filho como filho esquerdo
                 v.setEsquerdo(a);
             } else {
-                v.setDireito(a);
+                v.setDireito(a); //senão seta como filho direito
             }
-        }else {
+        }else {//se o avô for null é pq o pai é raiz
             a.setPai(null);
             raiz = a;
         }
 
-        if (a.getDireito() != null){
+        if (a.getDireito() != null){ //se o filho tiver filho direito guarda e seta o filho esquerdo do pai como esse filho do a
             NoAVL direito = (NoAVL)a.getDireito();
             p.setEsquerdo(direito);
             direito.setPai(p);
-        }  
-        a.setDireito(p);
-        p.setPai(a);
+        } else { //senão seta o filho do pai como null
+            p.setEsquerdo(null);
+        }
+        a.setDireito(p); //filho do filho vai ser o pai
+        p.setPai(a); //pai do pai vai ser o filho
 
         int fb_p = p.getFB() - 1 - Math.min(a.getFB(), 0);
         int fb_a = a.getFB() - 1 + Math.max(fb_p, 0);
@@ -157,26 +165,29 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
     }
 
     public void simpleLeftRotation(NoAVL p, NoAVL a){
-        NoAVL v = (NoAVL)p.getPai();
-        if (v != null){
-            a.setPai(v);
-            if (v.getEsquerdo() == p) {
+        NoAVL v = (NoAVL)p.getPai(); //pega o avô
+        if (v != null){ //se não é null
+            a.setPai(v); //seta o avô como pai do filho
+            if (v.getEsquerdo() == p) { //se o pai for filho esquerdo do avô seta o filho como filho esquerdo
                 v.setEsquerdo(a);
             } else {
-                v.setDireito(a);
+                v.setDireito(a); //senão seta como filho direito
             }
-        } else {
+        } else { //se o avô for null é pq o pai é raiz, então agora o raiz é o filho
             a.setPai(null);
             raiz = a;
         }
 
-        if (a.getEsquerdo() != null){
+        if (a.getEsquerdo() != null){ //se o filho tiver filho esquerdo guarda e seta o filho direito do pai como esse filho do a
             NoAVL esquerdo = (NoAVL)a.getEsquerdo();
             p.setDireito(esquerdo);
             esquerdo.setPai(p);
+        } else { //senão seta o filho do pai como null
+            p.setDireito(null);
         }
-        a.setEsquerdo(p);
-        p.setPai(a);
+
+        a.setEsquerdo(p); //filho do filho vai ser o pai
+        p.setPai(a); //pai do pai vai ser o filho
 
         int fb_p = p.getFB() + 1 - Math.min(a.getFB(), 0);
         int fb_a = a.getFB() + 1 + Math.max(fb_p, 0);
@@ -208,17 +219,9 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
     public int height(NoAVL n) {
         if (n == null || isExternal(n)){
             return 0;
-        } else {
-            int hDireito = 0;
-            int hEsquerda = 0;
-            try{
-                hEsquerda = this.height((NoAVL)n.getEsquerdo());
-                hDireito = this.height((NoAVL)n.getDireito()); 
-            } catch (Exception erro){
-                System.out.println(erro);
-            }
-            
-            
+        } else {            
+            int hEsquerda = this.height((NoAVL)n.getEsquerdo());
+            int hDireito = this.height((NoAVL)n.getDireito()); 
             return 1 + Math.max(hEsquerda, hDireito);
         }
     }
@@ -234,9 +237,9 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         for (int i = 0; i < linhas; i++){
             for (int j = 0; j < colunas; j++){
                 if (matriz[i][j] == null){
-                    System.out.print("  ");
+                    System.out.print("     ");
                 } else {
-                    System.out.printf("%3s", matriz[i][j]);
+                    System.out.printf("%5s", matriz[i][j]);
                 }
             }
             System.out.println();
