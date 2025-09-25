@@ -158,8 +158,8 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         a.setDireito(p); //filho do filho vai ser o pai
         p.setPai(a); //pai do pai vai ser o filho
 
-        int fb_p = p.getFB() - 1 - Math.min(a.getFB(), 0);
-        int fb_a = a.getFB() - 1 + Math.max(fb_p, 0);
+        int fb_p = p.getFB() - 1 - Math.max(a.getFB(), 0);
+        int fb_a = a.getFB() - 1 + Math.min(fb_p, 0);
         p.setFB(fb_p);
         a.setFB(fb_a);
     }
