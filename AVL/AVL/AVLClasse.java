@@ -32,9 +32,10 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         if (noPai.getPai() == null && noPai.getFB() != 0){ //se ele chegou no raiz vou verificar se está desbalanceado
             if (noPai.getFB() >= 2 && noPai.getEsquerdo() != null){ // se o fator de balanceamento for maior que 2 é por que ele ta grande pra esquerda então passa o pai e o filho esquerdo
                 rotation((NoAVL) noPai, (NoAVL)noPai.getEsquerdo()); //vai servir pra ver qual tipo de rotação fazer
-
+                break;
             } else if (noPai.getFB() <= -2 && noPai.getDireito() != null) { //senão passa o pai e o filho direito por que ta grande pra direita
                 rotation((NoAVL) noPai, (NoAVL)noPai.getDireito()); //vai servir pra ver qual tipo de rotação fazer
+                break;
             }
         }
     }
@@ -58,9 +59,10 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         if (noPai.getPai() == null && noPai.getFB() != 0){ //se ele chegou no raiz vou verificar se está desbalanceado
             if (noPai.getFB() >= 2 && noPai.getEsquerdo() != null){ // se o fator de balanceamento for maior que 2 é por que ele ta grande pra esquerda então passa o pai e o filho esquerdo
                 rotation((NoAVL) noPai, (NoAVL)noPai.getEsquerdo()); //vai servir pra ver qual tipo de rotação fazer
-
+                break;
             } else if (noPai.getFB() <= -2 && noPai.getDireito() != null) { //senão passa o pai e o filho direito por que ta grande pra direita
                 rotation((NoAVL) noPai, (NoAVL)noPai.getDireito()); //vai servir pra ver qual tipo de rotação fazer
+                break;
             }
         }
     }
