@@ -26,6 +26,15 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
                 rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
             }
         }
+
+        if (noPai.getDireito() != null) {
+            System.out.println("pai" + noPai.getChave());
+            System.out.println("direio:" + noPai.getDireito().getChave());
+        }
+        if (noPai.getEsquerdo() != null) {
+            System.out.println("pai" + noPai.getChave());
+            System.out.println("esquerdo" + noPai.getEsquerdo().getChave());
+        }
     }
 
     public void newFBRemoval(NoAVL noPai){
@@ -40,6 +49,15 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             if (noPai.getFB() >= 2 || noPai.getFB() <= -2){ // depois que atualiza vê se o fb é 2 ou -2 e chama a rotação passando o fb do pai e do atual
                 rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
             }
+        }
+
+        if (noPai.getDireito() != null) {
+            System.out.println("pai" + noPai.getChave());
+            System.out.println("direio:" + noPai.getDireito().getChave());
+        }
+        if (noPai.getEsquerdo() != null) {
+            System.out.println("pai" + noPai.getChave());
+            System.out.println("esquerdo" + noPai.getEsquerdo().getChave());
         }
     }
 
@@ -58,15 +76,6 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             novoNo.setPai(noPai);
             noPai.setFB(noPai.getFB() - 1); // atualiza fb antecessor e começa a regra 
             newFBIntersection(noPai);
-        }
-
-        if (noPai.getDireito() != null) {
-            System.out.println("pai" + noPai.getChave());
-            System.out.println("direio:" + noPai.getDireito().getChave());
-        }
-        if (noPai.getEsquerdo() != null) {
-            System.out.println("pai" + noPai.getChave());
-            System.out.println("esquerdo" + noPai.getEsquerdo().getChave());
         }
        
         tamanho++;

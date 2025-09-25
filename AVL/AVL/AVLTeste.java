@@ -27,7 +27,7 @@ public class AVLTeste{
         System.out.println();
         avl.remove(5);
 
-        // avl.printArvore();
+        avl.printArvore();
         System.out.println();
         
 
