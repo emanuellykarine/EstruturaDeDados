@@ -110,11 +110,15 @@ public class AVLTeste{
         avl5.printArvore();
         System.out.println();
 
-        avl5.addChild(90);
+        avl5.addChild(25);
         avl5.printArvore();
         System.out.println();
 
-        avl5.remove(40);
+        avl5.remove(10);
+        avl5.printArvore();
+        System.out.println();
+
+        avl5.remove(25);
         avl5.printArvore();
         System.out.println();
 

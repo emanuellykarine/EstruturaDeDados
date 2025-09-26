@@ -13,16 +13,18 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
     }
 
     public void newFBIntersection(NoAVL noPai){
-        while (noPai.getFB() != 0 && noPai.getPai() != null){ // se o fb do antecessor for 0 pare
-            NoAVL atual = noPai; // atual é o antecessor que foi atualizado
-            noPai = (NoAVL) noPai.getPai(); // novo pai é o pai do antecessor
+        // quando há uma inserção a rotação pode ser necessária no máximo uma vez por que depois da rotação a altura volta a ser a mesma de antes da inserção
+        while (noPai.getFB() != 0 && noPai.getPai() != null){ // se o nó for 0 ou for raiz pare
+            NoAVL atual = noPai; // atual é o nó
+            noPai = (NoAVL) noPai.getPai(); // noPai agora é o pai do nó
 
-            if ((atual == noPai.getEsquerdo())){ // se o atual for filho esquerdo
-                noPai.setFB(noPai.getFB() + 1); // soma no fb
+            if ((atual == noPai.getEsquerdo())){ // se o nó for filho esquerdo
+                noPai.setFB(noPai.getFB() + 1); // soma no fb do pai
             } else {
                 noPai.setFB(noPai.getFB() - 1); // se for filho direito subtrai
             }
 
+            // aqui vejo apenas o fb do pai por que na inserção é onde pode ter aumentado pra 2 ou -2
             if (noPai.getFB() >= 2 || noPai.getFB() <= -2){ // depois que atualiza vê se o fb é 2 ou -2 e chama a rotação passando o fb do pai e do atual
                 rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
                 break;
@@ -31,20 +33,33 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
     }
 
     public void newFBRemoval(NoAVL noPai){
-        while (noPai.getFB() == 0 && noPai.getPai() != null){ // se o fb do antecessor for diferente de 0 pare
+        // na remoção a altura da árvore pode continuar diminuindo depois da rotação, por que os fb dos ancestrais podem continuar diminuindo a medida que a rotação vai acontecendo
+        while (true) {
             NoAVL atual = noPai; // atual é o antecessor que foi atualizado
             noPai = (NoAVL) noPai.getPai(); // novo pai é o pai do antecessor
-            if ((atual == noPai.getEsquerdo())){ // se o atual for filho esquerdo
-                noPai.setFB(noPai.getFB() - 1); // subtrai no fb
-            } else {
-                noPai.setFB(noPai.getFB() + 1); // se for filho direito soma
+            
+            if (noPai != null){
+                if (atual.getFB() != 0) {
+                    break;
+                }
+
+                if ((atual == noPai.getEsquerdo())){ // se o atual for filho esquerdo
+                    noPai.setFB(noPai.getFB() - 1); // subtrai no fb
+                } else {
+                    noPai.setFB(noPai.getFB() + 1); // se for filho direito soma
+                }
+            }
+            
+            //olha o fb do atual por que na remoção ele pode ter ficado desbalanceado, na proxima volta verifica se o pai dele (o noPai de agora) ta desbalanceado e assim vai subindo
+            if (atual.getFB() >= 2 || atual.getFB() <= -2){ // vê se o fb do atual é 2 ou -2 e chama a rotação passando o fb do pai e do filho dele pra onde ele ta pendendo
+                NoAVL filho = atual.getFB() >= 2 ? (NoAVL) atual.getEsquerdo() : (NoAVL) atual.getDireito(); //se o fb for 2 ta pendendo pra esquerda ent passo filho esquerdo, senão passo filho direito
+                rotation(atual, filho); //vai servir pra ver qual tipo de rotação fazer
             }
 
-            if (noPai.getFB() >= 2 || noPai.getFB() <= -2){ // depois que atualiza vê se o fb é 2 ou -2 e chama a rotação passando o fb do pai e do atual
-                rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
+            if (noPai == null){
                 break;
             }
-        }       
+        }   
     }
 
     public void rotation(NoAVL p, NoAVL a){
@@ -152,11 +167,7 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             novoNo.setPai(noPai);
             newFBIntersection(noPai);            
         }
-        if (noPai.getFB() >= 2){
-            rotation(noPai, (NoAVL) noPai.getEsquerdo());
-        } else if (noPai.getFB() <= -2) {
-            rotation(noPai, (NoAVL) noPai.getDireito());
-        } 
+        
         tamanho++;
     }
 
@@ -208,11 +219,6 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             temp.setChave(tempChave);
         }
 
-        if (pai != null && pai.getFB() >= 2){
-            rotation(pai, (NoAVL) pai.getEsquerdo());
-        } else if (pai != null && pai.getFB() <= -2) {
-            rotation(pai, (NoAVL) pai.getDireito());
-        } 
         tamanho--;
         return remover;
     }
