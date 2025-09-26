@@ -16,7 +16,7 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         while (noPai.getFB() != 0 && noPai.getPai() != null){ // se o fb do antecessor for 0 pare
             NoAVL atual = noPai; // atual é o antecessor que foi atualizado
             noPai = (NoAVL) noPai.getPai(); // novo pai é o pai do antecessor
-            
+
             if ((atual == noPai.getEsquerdo())){ // se o atual for filho esquerdo
                 noPai.setFB(noPai.getFB() + 1); // soma no fb
             } else {
@@ -26,15 +26,6 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
             if (noPai.getFB() >= 2 || noPai.getFB() <= -2){ // depois que atualiza vê se o fb é 2 ou -2 e chama a rotação passando o fb do pai e do atual
                 rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
                 break;
-            }
-        }
-        
-        if (noPai.getPai() == null && noPai.getFB() != 0){ //se ele chegou no raiz vou verificar se está desbalanceado
-            if (noPai.getFB() >= 2 && noPai.getEsquerdo() != null){ // se o fator de balanceamento for maior que 2 é por que ele ta grande pra esquerda então passa o pai e o filho esquerdo
-                rotation((NoAVL) noPai, (NoAVL)noPai.getEsquerdo()); //vai servir pra ver qual tipo de rotação fazer
-
-            } else if (noPai.getFB() <= -2 && noPai.getDireito() != null) { //senão passa o pai e o filho direito por que ta grande pra direita
-                rotation((NoAVL) noPai, (NoAVL)noPai.getDireito()); //vai servir pra ver qual tipo de rotação fazer
             }
         }
     }
@@ -53,87 +44,7 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
                 rotation(noPai, atual); //vai servir pra ver qual tipo de rotação fazer
                 break;
             }
-        } 
-
-        if (noPai.getPai() == null && noPai.getFB() != 0){ //se ele chegou no raiz vou verificar se está desbalanceado
-            if (noPai.getFB() >= 2 && noPai.getEsquerdo() != null){ // se o fator de balanceamento for maior que 2 é por que ele ta grande pra esquerda então passa o pai e o filho esquerdo
-                rotation((NoAVL) noPai, (NoAVL)noPai.getEsquerdo()); //vai servir pra ver qual tipo de rotação fazer
-
-            } else if (noPai.getFB() <= -2 && noPai.getDireito() != null) { //senão passa o pai e o filho direito por que ta grande pra direita
-                rotation((NoAVL) noPai, (NoAVL)noPai.getDireito()); //vai servir pra ver qual tipo de rotação fazer
-            }
-        }
-    }
-
-    public void addChild(Object chave){
-        NoAVL noPai = (NoAVL) treeSearch(raiz, chave);
-        NoAVL novoNo = new NoAVL(noPai, chave, 0);
-
-        if((int) noPai.getChave() > (int) chave){
-            noPai.setEsquerdo(novoNo);
-            novoNo.setPai(noPai);
-            noPai.setFB(noPai.getFB() + 1); // atualiza fb antecessor e começa a regra
-            newFBIntersection(noPai);
-        } else { //inserção do lado direito
-            noPai.setDireito(novoNo);
-            novoNo.setPai(noPai);
-            noPai.setFB(noPai.getFB() - 1); // atualiza fb antecessor e começa a regra 
-            newFBIntersection(noPai);
-        }
-       
-        tamanho++;
-    }
-
-    public Object remove(Object chave){
-        NoAVL temp = (NoAVL) treeSearch(raiz, chave);
-        Object remover = temp.getChave();
-
-        if (temp == null){
-            throw new NoExcecao("Chave nao existe");
-        } else if (temp.getDireito() == null && temp.getEsquerdo() == null) { //não tem filhos
-            NoAVL pai = (NoAVL) temp.getPai();
-            if (pai == null){
-                raiz = null;
-            } else if (pai.getEsquerdo() == temp) {
-                pai.setEsquerdo(null);
-                pai.setFB(pai.getFB() - 1); // atualiza fb antecessor e começa a regra
-                newFBRemoval(pai);
-            } else {
-                pai.setDireito(null);
-                pai.setFB(pai.getFB() + 1); // atualiza fb antecessor e começa a regra
-                newFBRemoval(pai);
-            }
-
-        } else if (temp.getDireito() == null && temp.getEsquerdo() != null || temp.getDireito() != null && temp.getEsquerdo() == null) { //tem um filho
-            NoAVL filho = (NoAVL) ((hasLeft(temp)) ? temp.getEsquerdo() : temp.getDireito());
-
-            NoAVL pai = (NoAVL) temp.getPai();
-
-            if (pai == null) { // temp é raiz
-                raiz = filho;
-                filho.setPai(null);
-            } else {
-                if (pai.getEsquerdo() == temp) {
-                    pai.setEsquerdo(filho);
-                    pai.setFB(pai.getFB() - 1); // atualiza fb antecessor e começa a regra
-                    newFBRemoval(pai);
-                } else {
-                    pai.setDireito(filho);
-                    pai.setFB(pai.getFB() + 1); // atualiza fb antecessor e começa a regra
-                    newFBRemoval(pai);
-                }
-                filho.setPai(pai);
-            }
-        
-        } else { //tem dois filhos
-            NoAVL substituto = (NoAVL) sucessor((NoAVL) temp.getDireito());
-            Object tempChave = substituto.getChave();
-            remove(substituto.getChave());
-            temp.setChave(tempChave);
-        }
-
-        tamanho--;
-        return remover;
+        }       
     }
 
     public void rotation(NoAVL p, NoAVL a){
@@ -224,6 +135,86 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         int fb_a = a.getFB() + 1 + Math.max(fb_p, 0);
         p.setFB(fb_p);
         a.setFB(fb_a);
+    }
+
+    public void addChild(Object chave){
+        NoAVL noPai = (NoAVL) treeSearch(raiz, chave);
+        NoAVL novoNo = new NoAVL(noPai, chave, 0);
+
+        if((int) noPai.getChave() > (int) chave){
+            noPai.setEsquerdo(novoNo);
+            noPai.setFB(noPai.getFB() + 1); // atualiza fb antecessor e começa a regra
+            novoNo.setPai(noPai);
+            newFBIntersection(noPai);
+        } else { //inserção do lado direito
+            noPai.setDireito(novoNo);
+            noPai.setFB(noPai.getFB() - 1); // atualiza fb antecessor e começa a regra 
+            novoNo.setPai(noPai);
+            newFBIntersection(noPai);            
+        }
+        if (noPai.getFB() >= 2){
+            rotation(noPai, (NoAVL) noPai.getEsquerdo());
+        } else if (noPai.getFB() <= -2) {
+            rotation(noPai, (NoAVL) noPai.getDireito());
+        } 
+        tamanho++;
+    }
+
+    public Object remove(Object chave){
+        NoAVL temp = (NoAVL) treeSearch(raiz, chave);
+        Object remover = temp.getChave();
+        NoAVL pai = null;
+
+        if (temp == null){
+            throw new NoExcecao("Chave nao existe");
+        } else if (temp.getDireito() == null && temp.getEsquerdo() == null) { //não tem filhos
+            pai = (NoAVL) temp.getPai();
+            if (pai == null){
+                raiz = null;
+            } else if (pai.getEsquerdo() == temp) {
+                pai.setEsquerdo(null);
+                pai.setFB(pai.getFB() - 1); // atualiza fb antecessor 
+                newFBRemoval(pai);
+            } else {
+                pai.setDireito(null);
+                pai.setFB(pai.getFB() + 1); // atualiza fb antecessor
+                newFBRemoval(pai);
+            }
+            
+        } else if (temp.getDireito() == null && temp.getEsquerdo() != null || temp.getDireito() != null && temp.getEsquerdo() == null) { //tem um filho
+            NoAVL filho = (NoAVL) ((hasLeft(temp)) ? temp.getEsquerdo() : temp.getDireito());
+            pai = (NoAVL) temp.getPai();
+
+            if (pai == null) { // temp é raiz
+                raiz = filho;
+                filho.setPai(null);
+            } else {
+                if (pai.getEsquerdo() == temp) {
+                    pai.setEsquerdo(filho);
+                    pai.setFB(pai.getFB() - 1); // atualiza fb antecessor e começa a regra
+                    newFBRemoval(pai);
+                } else {
+                    pai.setDireito(filho);
+                    pai.setFB(pai.getFB() + 1); // atualiza fb antecessor e começa a regra
+                    newFBRemoval(pai);
+                }
+                filho.setPai(pai);
+            }
+        
+        } else { //tem dois filhos
+            NoAVL substituto = (NoAVL) sucessor((NoAVL) temp.getDireito());
+            Object tempChave = substituto.getChave();
+            remove(substituto.getChave());
+            temp.setChave(tempChave);
+        }
+
+        if (pai != null && pai.getFB() >= 2){
+            rotation(pai, (NoAVL) pai.getEsquerdo());
+        } else if (pai != null && pai.getFB() <= -2) {
+            rotation(pai, (NoAVL) pai.getDireito());
+        } 
+        tamanho--;
+        return remover;
     }
 
     //Sobrescrevendo métodos pra trabalhar com a classe NoAVL 
