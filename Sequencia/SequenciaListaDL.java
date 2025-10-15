@@ -1,6 +1,6 @@
 package Sequencia;
 
-public class SequenciaListaDL implements Sequencia{
+public class SequenciaListaDL {
     private int size;
     private No inicio;
     private No fim;
