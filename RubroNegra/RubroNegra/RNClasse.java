@@ -11,6 +11,8 @@ public class RNClasse extends ArvoreBP implements RNInterface {
     }
 
     public void newIntersection(NoRN noPai, NoRN noFilho){
+        //tem que ter um laço aqui?
+        
         NoRN avo = (NoRN) noPai.getPai();
         NoRN tio = noPai == (NoRN) avo.getEsquerdo() ? (NoRN) avo.getDireito() : (NoRN) avo.getEsquerdo();
 
@@ -18,7 +20,10 @@ public class RNClasse extends ArvoreBP implements RNInterface {
             if (tio.getCor() == true) { //se pai e tio forem rubro
                 noPai.setCor(false); //pai vira negro
                 tio.setCor(false); //tio vira negro
-                avo.setCor(false); //avô vira negro
+                if (avo != raiz) {
+                    avo.setCor(true); //avô vira rubro
+                }
+                
             } else if (tio.getCor() == false || tio.getChave() == null) {
                 rotation(noPai, noFilho);
             }
