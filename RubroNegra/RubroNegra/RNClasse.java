@@ -10,24 +10,28 @@ public class RNClasse extends ArvoreBP implements RNInterface {
         raiz = new NoRN(null, o, false); // raiz é negro
     }
 
-    public void newIntersection(NoRN noPai, NoRN noFilho){
+    public void newIntersection(NoRN noAtual){ //atual é o pai do que foi inserido
         //tem que ter um laço aqui?
-        
-        NoRN avo = (NoRN) noPai.getPai();
-        NoRN tio = noPai == (NoRN) avo.getEsquerdo() ? (NoRN) avo.getDireito() : (NoRN) avo.getEsquerdo();
+        while (noAtual != raiz || noAtual.getCor() != false){ //enquanto não chegar na raiz ou o pai não for negro
+            NoRN pai = (NoRN) noAtual.getPai();
+            NoRN irmao = noAtual == (NoRN) pai.getEsquerdo() ? (NoRN) pai.getDireito() : (NoRN) pai.getEsquerdo();
 
-        if (noPai.getCor() == true){ 
-            if (tio.getCor() == true) { //se pai e tio forem rubro
-                noPai.setCor(false); //pai vira negro
-                tio.setCor(false); //tio vira negro
-                if (avo != raiz) {
-                    avo.setCor(true); //avô vira rubro
+            if (noAtual.getCor() == true){ 
+                if (irmao.getCor() == true) { //se pai e irmao forem rubro
+                    noAtual.setCor(false); //pai vira negro
+                    irmao.setCor(false); //irmao vira negro
+                    if (pai != raiz) {
+                        pai.setCor(true); //avô vira rubro
+                    }
+                    
+                } else if (irmao.getCor() == false || irmao.getChave() == null) { //nesse caso o pai pode ser qualquer cor ou ele precisa ser rubro ou negro
+                    rotation(pai, noAtual);
+                    break;
                 }
-                
-            } else if (tio.getCor() == false || tio.getChave() == null) {
-                rotation(noPai, noFilho);
             }
+            noAtual = (NoRN) pai.getPai(); //sobe na árvore
         }
+        
     }
 
     public void rotation(NoRN pai, NoRN filho){
@@ -86,8 +90,8 @@ public class RNClasse extends ArvoreBP implements RNInterface {
         a.setDireito(p); //filho do filho vai ser o pai
         p.setPai(a); //pai do pai vai ser o filho
 
-        p.setCor(false); //pai vira negro
-        ((NoRN) p.getDireito()).setCor(true); //filho direito vira rubro
+        a.setCor(false); //pai vira negro
+        ((NoRN) a.getDireito()).setCor(true); //filho direito vira rubro
     }
 
     public void simpleLeftRotation(NoRN p, NoRN a){
@@ -116,8 +120,8 @@ public class RNClasse extends ArvoreBP implements RNInterface {
         a.setEsquerdo(p); //filho do filho vai ser o pai
         p.setPai(a); //pai do pai vai ser o filho
 
-        p.setCor(false); //pai vira negro
-        ((NoRN) p.getEsquerdo()).setCor(true); //filho esquerdo vira rubro
+        a.setCor(false); //pai vira negro
+        ((NoRN) a.getEsquerdo()).setCor(true); //filho esquerdo vira rubro
     }
 
     public void addChild(Object chave){
@@ -127,11 +131,11 @@ public class RNClasse extends ArvoreBP implements RNInterface {
         if((int) noPai.getChave() > (int) chave){
             noPai.setEsquerdo(novoNo);
             novoNo.setPai(noPai);
-            newIntersection(noPai, novoNo); //verificar se precisa repintar e fazer rotação
+            newIntersection(noPai); //verificar se precisa repintar e fazer rotação
         } else { //inserção do lado direito
             noPai.setDireito(novoNo);
             novoNo.setPai(noPai);
-            newIntersection(noPai, novoNo); //verificar se precisa repintar e fazer rotação
+            newIntersection(noPai); //verificar se precisa repintar e fazer rotação
         }
         tamanho++;
     }

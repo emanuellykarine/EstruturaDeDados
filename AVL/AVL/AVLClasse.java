@@ -16,7 +16,7 @@ public class AVLClasse extends ArvoreBP implements AVLInterface{
         // quando há uma inserção a rotação pode ser necessária no máximo uma vez por que depois da rotação a altura volta a ser a mesma de antes da inserção
         while (noPai.getFB() != 0 && noPai.getPai() != null){ // se o nó for 0 ou for raiz pare
             NoAVL atual = noPai; // atual é o nó
-            noPai = (NoAVL) noPai.getPai(); // noPai agora é o pai do nó
+            noPai = (NoAVL) noPai.getPai(); // noPai agora é     o pai do nó
 
             if ((atual == noPai.getEsquerdo())){ // se o nó for filho esquerdo
                 noPai.setFB(noPai.getFB() + 1); // soma no fb do pai
