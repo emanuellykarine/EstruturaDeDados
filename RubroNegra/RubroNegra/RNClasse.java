@@ -11,7 +11,7 @@ public class RNClasse extends ArvoreBP implements RNInterface {
     }
 
     public void newIntersection(NoRN noAtual){ //atual é o pai do que foi inserido
-        while (noAtual != raiz || noAtual.getCor() != false){ //enquanto não chegar na raiz ou o pai não for negro
+        while (!isRoot(noAtual) || noAtual.getCor() != false){ //enquanto não chegar na raiz ou o pai não for negro
             NoRN pai = (NoRN) noAtual.getPai();
             NoRN irmao = noAtual == (NoRN) pai.getEsquerdo() ? (NoRN) pai.getDireito() : (NoRN) pai.getEsquerdo();
 
@@ -19,7 +19,7 @@ public class RNClasse extends ArvoreBP implements RNInterface {
                 if (irmao.getCor() == true) { //se pai e irmao forem rubro
                     noAtual.setCor(false); //pai vira negro
                     irmao.setCor(false); //irmao vira negro
-                    if (pai != raiz) {
+                    if (!isRoot(pai)) {
                         pai.setCor(true); //avô vira rubro
                     }
                     
