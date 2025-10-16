@@ -1,6 +1,6 @@
 
 public interface RNInterface {
-    public void rotation(NoRN a, NoRN p); 
+    public int rotation(NoRN a, NoRN p); 
     public void newIntersection(NoRN n);
     public void newRemoval(NoRN n);
     public void simpleLeftRotation(NoRN n, NoRN a);
