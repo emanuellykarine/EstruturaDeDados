@@ -1,4 +1,3 @@
-import AVL.NoAVL;
 import Arvore.ArvoreBinariaPesquisa.ArvoreBP;
 import Arvore.ArvoreBinariaPesquisa.NoExcecao;
 
@@ -40,26 +39,103 @@ public class RNClasse extends ArvoreBP implements RNInterface {
     }
 
     public void newRemoval(NoRN noRemovido, NoRN noSubstituto){ //elemento que eu removi e o que vai ficar no lugar dele
-        while (true) { 
-            NoRN pai = (NoRN) noRemovido.getPai();
-            NoRN irmao = noRemovido == (NoRN) pai.getDireito() ? (NoRN) pai.getEsquerdo() : (NoRN) pai.getDireito(); 
+        NoRN pai = (NoRN) noRemovido.getPai();
+        NoRN irmao = noRemovido == (NoRN) pai.getDireito() ? (NoRN) pai.getEsquerdo() : (NoRN) pai.getDireito(); 
+        NoRN sobrinhoEsquerdo = null;
+        NoRN sobrinhoDireito = null;
 
-            if (noRemovido.getCor() == true && noSubstituto.getCor() == true){ // se for rubro -> rubro Situação 1 só troca de lugar
-                break;
-            } else if (noRemovido.getCor() == false && noSubstituto.getCor() == true) { //se for negro -> rubro Situação 2 troca cor do substituto de rubro pra negro
+        if (irmao != null){
+            sobrinhoEsquerdo = (NoRN) irmao.getEsquerdo();
+            sobrinhoDireito = (NoRN) irmao.getDireito();
+        }
+    
+        if (noSubstituto != null){ // se não for null vê se é rubro
+
+            //Situação 1 = rubro -> rubro
+            if (noRemovido.getCor() == true && noSubstituto.getCor() == true){ // não faz nada só troca de lugar
+                return;
+        
+            //Situação 2 = negro -> rubro
+            } else if (noRemovido.getCor() == false && noSubstituto.getCor() == true) { //troca cor do substituto de rubro pra negro
                 noSubstituto.setCor(false);
-                break;
-            } else if (noRemovido.getCor() == false && noSubstituto.getCor() == false) { //se for negro -> negro Situação 3 ve os 4 casos
-                if (pai.getCor() == false && irmao.getCor() == true) {
-                    simpleLeftRotation(pai, irmao); //rotação simples a esquerda 
-                    irmao.setCor(false); //irmão vira negro
-                    pai.setCor(true); //pai vira rubro
-                }
+                return;
             }
 
-            
+        } else { //se for null trata ele como negro também
+            // Situação 3 = negro -> negro
+            if (noRemovido.getCor() == false) { //ve os 4 casos
+                situacao3(pai, irmao, sobrinhoEsquerdo, sobrinhoDireito);
+
+            //Situacao 4 = rubro -> negro
+            } else {
+                if (noSubstituto != null) {
+                    noSubstituto.setCor(true); //substituto vira rubro
+                    situacao3(pai, irmao, sobrinhoEsquerdo, sobrinhoDireito);
+                }
+            }
         }  
     }
+
+    public void situacao3(NoRN pai, NoRN irmao, NoRN sobrinhoEsquerdo, NoRN sobrinhoDireito){
+        //Caso 1 - irmão rubro e pai negro
+        if (pai.getCor() == false && irmao.getCor() == true) { 
+            simpleLeftRotation(pai, irmao); //rotação simples a esquerda 
+            irmao.setCor(false); //irmão vira negro
+            pai.setCor(true); //pai vira rubro
+            
+            // chama caso 2b
+            pai.setCor(false); //pai vira negro 
+            return;
+        
+        //Caso 2 - irmão e sobrinhos negros
+        } else if ((sobrinhoEsquerdo.getCor() == false || sobrinhoEsquerdo == null) && (sobrinhoDireito.getCor() == false || sobrinhoDireito == null) && (irmao.getCor() == false || irmao == null)) {
+            if (irmao != null){
+                irmao.setCor(true); //irmão vira rubro
+            }
+
+            //Caso 2a - pai negro
+            if (pai.getCor() == false) {
+                newRemoval(pai, null);
+            
+            //Caso 2b - pai rubro (Caso terminal) 
+            } else {
+                pai.setCor(false); //pai vira negro 
+                return;
+            }
+        
+        //Caso 3 - sobrinho esquerdo rubro, sobrinho direito negro e irmão negro
+        } else if ((sobrinhoEsquerdo != null && sobrinhoEsquerdo.getCor() == true) && (irmao.getCor() == false || irmao == null) && (sobrinhoDireito != null && sobrinhoDireito.getCor() == false)) {
+            sobrinhoEsquerdo.setCor(false); //sobrinho esquerdo vira negro
+            if (irmao != null) {
+                irmao.setCor(true); //irmão vira rubro
+                simpleRightRotation(pai, irmao);
+            }
+
+            //chama Caso 4
+            if (irmao != null) {
+                irmao.setCor(pai.getCor()); //irmão pega a cor do pai
+                simpleLeftRotation(pai, irmao);
+            }
+
+            pai.setCor(false); //pai vira negro
+            sobrinhoDireito.setCor(false); //sobrinho direito vira negro
+            return;
+            
+
+        //Caso 4 - irmão negro e sobrinho direito rubro (Caso terminal)
+        } else if ((irmao.getCor() == false || irmao == null) && (sobrinhoDireito != null && sobrinhoDireito.getCor() == true)) {
+            if (irmao != null) {
+                irmao.setCor(pai.getCor()); //irmão pega a cor do pai
+                simpleLeftRotation(pai, irmao);
+            }
+
+            pai.setCor(false); //pai vira negro
+            sobrinhoDireito.setCor(false); //sobrinho direito vira negro
+            return;
+        }
+    }
+             
+    
 
     public int rotation(NoRN pai, NoRN filho){
         NoRN avo = (NoRN) pai.getPai();
