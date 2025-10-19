@@ -2,6 +2,8 @@ public class RNTeste {
     public static void main(String[] args){
 
         System.out.println("-------------1 arvore -------------");
+        
+
         RNClasse rn = new RNClasse(10);
         rn.addChild(5);
         rn.addChild(15);
@@ -41,8 +43,8 @@ public class RNTeste {
         rn2.printArvore();
         System.out.println();
 
-        rn.remove(40);
-        rn.printArvore();
+        rn2.remove(40);
+        rn2.printArvore();
         System.out.println();
 
         System.out.println("----------3--------------");
@@ -61,6 +63,7 @@ public class RNTeste {
         System.out.println("-------------4--------------");
         RNClasse rn4 = new RNClasse(10);
         rn4.addChild(20);
+        rn4.printArvore();
         rn4.addChild(30);
         rn4.printArvore();
         System.out.println();
@@ -119,7 +122,33 @@ public class RNTeste {
         rn5.remove(25);
         rn5.printArvore();
         System.out.println();
+        
+         System.out.println("--------------6-------------");
+        RNClasse rn6 = new RNClasse(1);
+        rn6.addChild(2);
+        rn6.addChild(3);
+        rn6.printArvore();
+        System.out.println();
 
-       
+        rn6.addChild(4);
+        rn6.printArvore();
+        System.out.println();
+        
+        rn6.addChild(5);
+        rn6.printArvore();
+        System.out.println();
+
+        rn6.addChild(6);
+        rn6.printArvore();
+        System.out.println();
+
+        rn6.addChild(7);
+        rn6.printArvore();
+        System.out.println();
+
+        rn6.addChild(8);
+        rn6.printArvore();
+        System.out.println();
+
     }
 }
