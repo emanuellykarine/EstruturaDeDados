@@ -137,7 +137,6 @@ public class RNClasse extends ArvoreBP implements RNInterface {
                 }
             }
             return;
-
         } 
         
         //Caso 3 - sobrinho esquerdo rubro, sobrinho direito negro e irmão negro
@@ -163,7 +162,6 @@ public class RNClasse extends ArvoreBP implements RNInterface {
                     ? (NoRN) pai.getEsquerdo()
                     : (NoRN) pai.getDireito());
             sobrinhoDireito = (irmao != null) ? (NoRN) irmao.getDireito() : null;
-            
         } 
 
         //Caso 4 - irmão negro e sobrinho direito rubro (Caso terminal)

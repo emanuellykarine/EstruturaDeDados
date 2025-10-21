@@ -123,7 +123,7 @@ public class RNTeste {
         rn5.printArvore();
         System.out.println();
         
-         System.out.println("--------------6-------------");
+        System.out.println("--------------6-------------");
         RNClasse rn6 = new RNClasse(1);
         rn6.addChild(2);
         rn6.addChild(3);
@@ -148,6 +148,72 @@ public class RNTeste {
 
         rn6.addChild(8);
         rn6.printArvore();
+        System.out.println();
+
+        rn6.addChild(9);
+        rn6.printArvore();
+        System.out.println();
+
+        System.out.println("--------------7-------------");
+        RNClasse rn7 = new RNClasse(9);
+        rn7.addChild(8);
+        rn7.addChild(7);
+        rn7.printArvore();
+        System.out.println();
+
+        rn7.addChild(6);
+        rn7.printArvore();
+        System.out.println();
+        
+        rn7.addChild(5);
+        rn7.printArvore();
+        System.out.println();
+
+        rn7.addChild(4);
+        rn7.printArvore();
+        System.out.println();
+
+        rn7.addChild(3);
+        rn7.printArvore();
+        System.out.println();
+
+        rn7.addChild(2);
+        rn7.printArvore();
+        System.out.println();
+
+        rn7.addChild(1);
+        rn7.printArvore();
+        System.out.println();
+
+        System.out.println("--------------8-------------");
+        RNClasse rn8 = new RNClasse(100);
+        rn8.addChild(150);
+        rn8.addChild(130);
+        rn8.printArvore();
+        System.out.println();
+
+        rn8.addChild(140);
+        rn8.printArvore();
+        System.out.println();
+        
+        rn8.addChild(90);
+        rn8.printArvore();
+        System.out.println();
+
+        rn8.addChild(80);
+        rn8.printArvore();
+        System.out.println();
+
+        rn8.addChild(95);
+        rn8.printArvore();
+        System.out.println();
+
+        rn8.addChild(93);
+        rn8.printArvore();
+        System.out.println();
+
+        rn8.addChild(97);
+        rn8.printArvore();
         System.out.println();
 
     }
