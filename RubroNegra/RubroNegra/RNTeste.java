@@ -248,5 +248,51 @@ public class RNTeste {
         rn11.remove(8);
         rn11.printArvore();
         System.out.println();
+
+        System.out.println("--------------12-------------");
+        RNClasse rn12 = new RNClasse(7);
+        rn12.addChild(5);
+        rn12.addChild(9);
+        rn12.printArvore();
+        System.out.println();
+
+        rn12.addChild(8);
+        rn12.printArvore();
+        System.out.println();
+
+        rn12.addChild(10);
+        rn12.printArvore();
+        System.out.println();
+
+        rn12.addChild(15);
+        rn12.printArvore();
+        System.out.println();
+        
+        rn12.remove(5);
+        rn12.printArvore();
+        System.out.println();
+
+        System.out.println("--------------13-------------");
+        RNClasse rn13 = new RNClasse(20);
+        rn13.addChild(25);
+        rn13.addChild(15);
+        rn13.printArvore();
+        System.out.println();
+
+        rn13.addChild(14);
+        rn13.printArvore();
+        System.out.println();
+
+        rn13.addChild(17);
+        rn13.printArvore();
+        System.out.println();
+
+        rn13.addChild(13);
+        rn13.printArvore();
+        System.out.println();
+        
+        rn13.remove(25);
+        rn13.printArvore();
+        System.out.println();
     }
 }

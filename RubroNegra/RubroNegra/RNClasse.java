@@ -105,6 +105,9 @@ public class RNClasse extends ArvoreBP implements RNInterface {
     public void situacao3(NoRN noRemovido, NoRN pai, NoRN irmao, NoRN sobrinhoPerto, NoRN sobrinhoLonge){
         //Caso 1 - irmão rubro e pai negro
         if ((pai != null && pai.getCor() == false) && (irmao != null && irmao.getCor() == true)) { 
+            irmao.setCor(false); //irmão vira negro
+            pai.setCor(true); //pai vira rubro 
+            
             System.out.println("Caso 1");
             if ((NoRN) pai.getDireito() == irmao){
                 simpleLeftRotation(pai, irmao); //rotação simples a esquerda 
@@ -129,11 +132,6 @@ public class RNClasse extends ArvoreBP implements RNInterface {
                     sobrinhoLonge = (NoRN) irmao.getEsquerdo();
                 }
             }
-
-            irmao.setCor(false); //irmão vira negro
-            pai.setCor(true); //pai vira rubro 
-
-            //cai no caso 2b passando o novo irmao e os novos sobrinhos
         }
 
         //Caso 2 - irmão e sobrinhos negros
