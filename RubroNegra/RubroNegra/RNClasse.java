@@ -62,12 +62,17 @@ public class RNClasse extends ArvoreBP implements RNInterface {
             (noRemovido == (NoRN) pai.getDireito()
                 ? (NoRN) pai.getEsquerdo()
                 : (NoRN) pai.getDireito());
-        NoRN sobrinhoEsquerdo = null;
-        NoRN sobrinhoDireito = null;
+        NoRN sobrinhoLonge = null;
+        NoRN sobrinhoPerto = null;
 
         if (irmao != null){
-            sobrinhoEsquerdo = (NoRN) irmao.getEsquerdo();
-            sobrinhoDireito = (NoRN) irmao.getDireito();
+            if (pai.getEsquerdo() == irmao){
+                sobrinhoLonge = (NoRN) irmao.getEsquerdo();
+                sobrinhoPerto = (NoRN) irmao.getDireito();
+            } else {
+                sobrinhoLonge = (NoRN) irmao.getDireito();
+                sobrinhoPerto = (NoRN) irmao.getEsquerdo();
+            }
         }
     
         //Situação 1 = rubro -> rubro
@@ -84,43 +89,56 @@ public class RNClasse extends ArvoreBP implements RNInterface {
         // Situação 3 = negro -> negro
         } else if (noRemovido.getCor() == false && (noSubstituto == null || noSubstituto.getCor() == false)) { //ve os 4 casos
             System.out.println("situação 3");
-            situacao3(noRemovido, pai, irmao, sobrinhoEsquerdo, sobrinhoDireito);
+            situacao3(noRemovido, pai, irmao, sobrinhoLonge, sobrinhoPerto);
 
         //Situacao 4 = rubro -> negro
         } else {
             System.out.println("situação 4");
             if (noSubstituto != null) {
                 noSubstituto.setCor(true); //substituto vira rubro
-                situacao3(noRemovido, pai, irmao, sobrinhoEsquerdo, sobrinhoDireito);
+                situacao3(noRemovido, pai, irmao, sobrinhoLonge, sobrinhoPerto);
             }
         }
     }  
     
 
-    public void situacao3(NoRN noRemovido, NoRN pai, NoRN irmao, NoRN sobrinhoEsquerdo, NoRN sobrinhoDireito){
+    public void situacao3(NoRN noRemovido, NoRN pai, NoRN irmao, NoRN sobrinhoLonge, NoRN sobrinhoPerto){
         //Caso 1 - irmão rubro e pai negro
         if ((pai != null && pai.getCor() == false) && (irmao != null && irmao.getCor() == true)) { 
-            simpleLeftRotation(pai, irmao); //rotação simples a esquerda 
-            irmao.setCor(false); //irmão vira negro
-            pai.setCor(true); //pai vira rubro 
+            System.out.println("Caso 1");
+            if (pai.getDireito() == irmao){
+                simpleLeftRotation(pai, irmao); //rotação simples a esquerda 
+            } else {
+                simpleRightRotation(pai, irmao);
+            }
 
-            //cai no caso 2b passando o novo irmao
+            pai = (NoRN) noRemovido.getPai();
             irmao = (pai == null) ? null :
                 (noRemovido == (NoRN) pai.getDireito()
                     ? (NoRN) pai.getEsquerdo()
                     : (NoRN) pai.getDireito());
-            sobrinhoEsquerdo = null;
-            sobrinhoDireito = null;
+            sobrinhoLonge = null;
+            sobrinhoPerto = null;
 
             if (irmao != null){
-                sobrinhoEsquerdo = (NoRN) irmao.getEsquerdo();
-                sobrinhoDireito = (NoRN) irmao.getDireito();
+                if (pai.getEsquerdo() == irmao){
+                    sobrinhoLonge = (NoRN) irmao.getEsquerdo();
+                    sobrinhoPerto = (NoRN) irmao.getDireito();
+                } else {
+                    sobrinhoLonge = (NoRN) irmao.getDireito();
+                    sobrinhoPerto = (NoRN) irmao.getEsquerdo();
+                }
             }
+
+            irmao.setCor(false); //irmão vira negro
+            pai.setCor(true); //pai vira rubro 
+
+            //cai no caso 2b passando o novo irmao e os novos sobrinhos
         }
 
         //Caso 2 - irmão e sobrinhos negros
-        if ((sobrinhoEsquerdo == null || sobrinhoEsquerdo.getCor() == false) && 
-        (sobrinhoDireito == null || sobrinhoDireito.getCor() == false) && 
+        if ((sobrinhoLonge == null || sobrinhoLonge.getCor() == false) && 
+        (sobrinhoPerto == null || sobrinhoPerto.getCor() == false) && 
         (irmao == null || irmao.getCor() == false)) {
             if (irmao != null){
                 irmao.setCor(true); //irmão vira rubro
@@ -128,52 +146,70 @@ public class RNClasse extends ArvoreBP implements RNInterface {
 
             //Caso 2a - pai negro
             if (pai != null){
+                System.out.println("Caso 2a");
                 if (pai.getCor() == false) {
-                newRemoval(pai, null);
+                    newRemoval(pai, null);
             
                 //Caso 2b - pai rubro (Caso terminal) 
                 } else {
+                    System.out.println("Caso 2b");
                     pai.setCor(false); //pai vira negro 
                 }
             }
             return;
         } 
         
-        //Caso 3 - sobrinho esquerdo rubro, sobrinho direito negro e irmão negro
-        if ((sobrinhoEsquerdo != null && sobrinhoEsquerdo.getCor() == true) && 
+        //Caso 3 - sobrinho longe rubro, sobrinho perto negro e irmão negro
+        if ((sobrinhoLonge != null && sobrinhoLonge.getCor() == true) && 
         (irmao == null || irmao.getCor() == false) && 
-        (sobrinhoDireito != null && sobrinhoDireito.getCor() == false)) {
+        (sobrinhoPerto == null || sobrinhoPerto.getCor() == false)) {
+            System.out.println("Caso 3");
 
-            sobrinhoEsquerdo.setCor(false); //sobrinho esquerdo vira negro
+            sobrinhoLonge.setCor(false); //sobrinho Longe vira negro
             if (irmao != null) {
-                irmao.setCor(true); //irmão vira rubro
-                simpleRightRotation(pai, irmao);
-            }
+                if (pai.getEsquerdo() == irmao){
+                    simpleRightRotation(pai, irmao);
+                } else {
+                    simpleLeftRotation(pai, irmao);
+                }
 
-            //chama Caso 4
-            if (irmao != null) {
-                irmao.setCor(pai.getCor()); //irmão pega a cor do pai
-                simpleLeftRotation(pai, irmao);
+                pai = (NoRN) noRemovido.getPai(); //pai, irmão e sobrinhos atualizados
+                irmao = (pai == null) ? null :
+                    (noRemovido == (NoRN) pai.getDireito()
+                        ? (NoRN) pai.getEsquerdo()
+                        : (NoRN) pai.getDireito());
+
+                if (irmao != null){
+                    if (pai.getDireito() == irmao) {
+                        sobrinhoPerto = (NoRN) irmao.getEsquerdo();
+                    } else {
+                        sobrinhoPerto = (NoRN) irmao.getDireito();
+                    }
+                    irmao.setCor(true); //irmão vira rubro
+                }
+
             }
 
             // Após isso, cair no caso 4 (abaixo)
-            irmao = (pai == null) ? null :
-                (noRemovido == (NoRN) pai.getDireito()
-                    ? (NoRN) pai.getEsquerdo()
-                    : (NoRN) pai.getDireito());
-            sobrinhoDireito = (irmao != null) ? (NoRN) irmao.getDireito() : null;
         } 
 
         //Caso 4 - irmão negro e sobrinho direito rubro (Caso terminal)
         if ((irmao == null || irmao.getCor() == false) && 
-        (sobrinhoDireito != null && sobrinhoDireito.getCor() == true)) {
+        (sobrinhoPerto != null && sobrinhoPerto.getCor() == true)) {
+            System.out.println("Caso 4");
+
             if (irmao != null) {
                 irmao.setCor(pai.getCor()); //irmão pega a cor do pai
-                simpleLeftRotation(pai, irmao);
+                if (pai.getDireito() == irmao){
+                    simpleLeftRotation(pai, irmao);
+                } else {
+                    simpleRightRotation(pai, irmao);
+                }
             }
 
+            pai = (NoRN) noRemovido.getPai();
             pai.setCor(false); //pai vira negro
-            if (sobrinhoDireito != null) sobrinhoDireito.setCor(false);
+            if (sobrinhoPerto != null) sobrinhoPerto.setCor(false);
         }
     }
              
@@ -300,11 +336,11 @@ public class RNClasse extends ArvoreBP implements RNInterface {
             if (pai == null){
                 raiz = null;
             } else if (pai.getEsquerdo() == temp) {
+                newRemoval(temp, null);
                 pai.setEsquerdo(null);
-                newRemoval(temp, null);
             } else {
-                pai.setDireito(null);
                 newRemoval(temp, null);
+                pai.setDireito(null);
             }
             
         } else if (temp.getDireito() == null && temp.getEsquerdo() != null || temp.getDireito() != null && temp.getEsquerdo() == null) { //tem um filho
@@ -316,11 +352,11 @@ public class RNClasse extends ArvoreBP implements RNInterface {
                 filho.setPai(null);
             } else {
                 if (pai.getEsquerdo() == temp) {
+                    newRemoval(temp, filho);
                     pai.setEsquerdo(filho);
-                    newRemoval(temp, filho);
                 } else {
-                    pai.setDireito(filho);
                     newRemoval(temp, filho);
+                    pai.setDireito(filho);
                 }
                 filho.setPai(pai);
             }
