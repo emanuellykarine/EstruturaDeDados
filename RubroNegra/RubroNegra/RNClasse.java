@@ -65,6 +65,13 @@ public class RNClasse extends ArvoreBP implements RNInterface {
         NoRN sobrinhoPerto = null;
         NoRN sobrinhoLonge = null;
 
+        if (pai != null){
+            System.out.println("Pai: " + pai.getChave());
+        } 
+        if (irmao != null){
+            System.out.println("Irmão: " + irmao.getChave());
+        }
+
         if (irmao != null){
             if ((NoRN) pai.getEsquerdo() == irmao){
                 sobrinhoPerto = (NoRN) irmao.getDireito();
@@ -73,6 +80,13 @@ public class RNClasse extends ArvoreBP implements RNInterface {
                 sobrinhoPerto = (NoRN) irmao.getEsquerdo();
                 sobrinhoLonge = (NoRN) irmao.getDireito();
             }
+        }
+
+        if(sobrinhoPerto != null){
+            System.out.println("Sobrinho Perto: " + sobrinhoPerto.getChave());
+        }
+        if(sobrinhoLonge != null){
+            System.out.println("Sobrinho Longe: " + sobrinhoLonge.getChave());
         }
     
         //Situação 1 = rubro -> rubro

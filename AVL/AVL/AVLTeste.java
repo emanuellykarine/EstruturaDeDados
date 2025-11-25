@@ -43,8 +43,8 @@ public class AVLTeste{
         avl2.printArvore();
         System.out.println();
 
-        avl.remove(40);
-        avl.printArvore();
+        avl2.remove(40);
+        avl2.printArvore();
         System.out.println();
 
         System.out.println("AVL 3 Rotação dupla a esquerda");
