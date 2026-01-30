@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
+//estrutura só pra fins de estudo, não foi testada
 public class GrafoClasse {
     private Vector<Vertice> listaVertices;
 
@@ -57,7 +58,7 @@ public class GrafoClasse {
 
 
     public Object removerVertice(Vertice v) {
-        Object valor = v.getValor()/
+        Object valor = v.getValor()
 
         for (Aresta a: v.getArestasAdjacentes()) {
             Vertice oposto = this.oposto(v, a);
@@ -69,6 +70,77 @@ public class GrafoClasse {
         this.listaVertices.remove(v);
         return valor;
     }
+
+
+    //prova 4 - grafo 
+    // public void removerVertice(Vertice v) {
+
+    //     // 1) remover todas as arestas incidentes em v
+    //     for (Vertice u : Vertices) {
+    //         u.VerticesAdjacentes.remove(v);
+    //     }
+
+    //     // 2) remover o próprio vértice do grafo
+    //     Vertices.remove(v);
+    // }
+
+    // public int grau(Vertice v) {
+    //     return v.VerticesAdjacentes.size();
+    // }
+
+    //--------------------------------------------------------
+    //3a prova 
+    // public ArrayList<Aresta> arestasIncidentes(Vertice v) {
+    //     ArrayList<Aresta> arestasInc = new ArrayList<>();
+
+    //     int idx = vertices.indexOf(v);
+    //     if (idx == -1) return arestasInc;
+
+    //     for (int j = 0; j < matrizAdj[idx].length; j++) {
+    //         if (matrizAdj[idx][j] != null) {
+    //             arestasInc.add(matrizAdj[idx][j]);
+    //         }
+    //     }
+
+    //     return arestasInc;
+    // }
+
+    // public int grau(Vertice v) {
+    //     return arestasIncidentes(v).size();
+    // }
+
+    //----------------------------------------
+
+    //recuperção
+    // public void inserirVertice(Vertice v) {
+    //     vertices.add(v);
+    //     qtdVertices++;
+
+    //     // cria nova matriz maior
+    //     Vector<Arestas> novaMatriz[][] = new Vector[qtdVertices][qtdVertices];
+
+    //     // copia os dados antigos
+    //     if (matrizAdj != null) {
+    //         for (int i = 0; i < qtdVertices - 1; i++) {
+    //             for (int j = 0; j < qtdVertices - 1; j++) {
+    //                 novaMatriz[i][j] = matrizAdj[i][j];
+    //             }
+    //         }
+    //     }
+
+    //     // inicializa novas posições
+    //     for (int i = 0; i < qtdVertices; i++) {
+    //         for (int j = 0; j < qtdVertices; j++) {
+    //             if (novaMatriz[i][j] == null) {
+    //                 novaMatriz[i][j] = new Vector<Arestas>();
+    //             }
+    //         }
+    //     }
+
+    //     matrizAdj = novaMatriz;
+    // }
+
+    //---------------------------------------
 
     public Object removerAresta(Aresta a){
         Object valor = a.getValor();
@@ -106,64 +178,46 @@ public class GrafoClasse {
         return this.listaVertices.size();
     }
 
-    // public ArrayList<Aresta> arestasIncidentes(Vertice v) {
-    //     ArrayList<Aresta> incidentes = new ArrayList<>();
+   
+    public List<Object> dfs() {
+        List<Object> visitados = new ArrayList<>();
 
-    //     int idx = vertices.indexOf(v);
-    //     if (idx == -1) {
-    //         return incidentes;
-    //     }
-
-    //     // linha
-    //     for (int j = 0; j < matrizAdj.length; j++) {
-    //         if (matrizAdj[idx][j] != null) {
-    //             incidentes.add(matrizAdj[idx][j]);
-    //         }
-    //     }
-
-    //     // coluna
-    //     for (int i = 0; i < matrizAdj.length; i++) {
-    //         if (matrizAdj[i][idx] != null && !incidentes.contains(matrizAdj[i][idx])) {
-    //             incidentes.add(matrizAdj[i][idx]);
-    //         }
-    //     }
-
-    //     return incidentes;
-    // }
-
-    public List<Object> dfs(){ //método de busca depth (profundidade) usa pilha
-        List<Object> visitados = new ArrayList<>(); //visitados pra retornar
-        if (listaVertices.isEmpty()) {
-            return visitados;
+        for (Vertice v : listaVertices) {
+            v.visitado(false);
         }
 
-        Vertice inicio = listaVertices.get(0); //começa sempre do inicio
-        PilhaArray pilha = new PilhaArray(); //cria uma pilha
+        if (listaVertices.isEmpty()) return visitados;
+
+        Vertice inicio = listaVertices.get(0);
+        PilhaArray pilha = new PilhaArray();
 
         pilha.push(inicio);
         inicio.visitado(true);
 
-        while (!pilha.isEmpty()){
+        while (!pilha.isEmpty()) {
             Vertice atual = pilha.pop();
             visitados.add(atual.getValor());
 
-            for (Aresta a : atual.getArestasAdjacentes()){
+            for (Aresta a : atual.getArestasAdjacentes()) {
                 Vertice vizinho = oposto(atual, a);
-                if (vizinho != null && !vizinho.visitado()){
+                if (vizinho != null && !vizinho.visitado()) {
                     pilha.push(vizinho);
                     vizinho.visitado(true);
                 }
             }
         }
 
-        return visitados; 
+        return visitados;
     }
 
-    public List<Object> bfs(){ //método de busca breadth (largura) usa fila
+    public List<Object> bfs() {
         List<Object> visitados = new ArrayList<>();
-        if (listaVertices.isEmpty()) {
-            return visitados;
+
+        for (Vertice v : listaVertices) {
+            v.visitado(false);
         }
+
+        if (listaVertices.isEmpty()) return visitados;
 
         Vertice inicio = listaVertices.get(0);
         FilaArray fila = new FilaArray();
@@ -171,11 +225,11 @@ public class GrafoClasse {
         fila.enqueue(inicio);
         inicio.visitado(true);
 
-        while (!fila.isEmpty()){
+        while (!fila.isEmpty()) {
             Vertice atual = fila.dequeue();
             visitados.add(atual.getValor());
 
-            for (Aresta a: atual.getArestasAdjacentes()){
+            for (Aresta a : atual.getArestasAdjacentes()) {
                 Vertice vizinho = oposto(atual, a);
                 if (vizinho != null && !vizinho.visitado()) {
                     fila.enqueue(vizinho);
@@ -183,6 +237,11 @@ public class GrafoClasse {
                 }
             }
         }
-        return visitados; 
+
+        return visitados;
     }
+
+
+    //como copiar uma matriz 
+
 }
