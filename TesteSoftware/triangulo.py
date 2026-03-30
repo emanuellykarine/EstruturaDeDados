@@ -21,3 +21,6 @@ else:
 # @emanuellykarine ➜ /workspaces/EstruturaDeDados/TesteSoftware (main) $ python triangulo.py
 # 4 4 4
 # Equilatero
+
+
+
